@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using XxlStore;
 
 namespace XxlStore.Controllers
 {
@@ -6,7 +7,11 @@ namespace XxlStore.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> Products = Data.ExistingTovars;
+
+            IEnumerable<Product> filteredProducts = Products.Where(x => x.FlagSaleLeader);
+
+            return View(filteredProducts);
         }
     }
 }

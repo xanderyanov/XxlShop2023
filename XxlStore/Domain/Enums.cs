@@ -1,4 +1,4 @@
-﻿namespace TimerStore
+﻿namespace XxlStore
 {
     public class EnumBase
     {

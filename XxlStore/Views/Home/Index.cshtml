@@ -1,1 +1,10 @@
-﻿<h4>Welcome to XxlStore</h4>
+﻿@model IEnumerable<Product>
+
+<h4>Welcome to XxlStore</h4>
+
+@foreach (var p in Model ?? Enumerable.Empty<Product>()) {
+    <div>
+        <h3>@p.Name</h3>
+        <h4>@p.Price.ToString("c")</h4>
+    </div>
+}
