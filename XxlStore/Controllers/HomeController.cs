@@ -7,7 +7,7 @@ namespace XxlStore.Controllers
     public class HomeController : Controller
     {
         public int PageSize = 16;
-        public IActionResult Index(int productPage = 1)
+        public IActionResult Index(string? category, int productPage = 1)
         {
             IEnumerable<Product> Products = Data.ExistingTovars;
 
@@ -16,6 +16,7 @@ namespace XxlStore.Controllers
             return View(new ProductsListViewModel
             {
                 Products = filteredProducts
+                .Where(p => category == null || p.BrandName == category)
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize),
                 PagingInfo = new PagingInfo
@@ -23,8 +24,8 @@ namespace XxlStore.Controllers
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
                     TotalItems = filteredProducts.Count()
-                }
-                //CurrentCategory = id
+                },
+                CurrentCategory = category
             });
 
         }
