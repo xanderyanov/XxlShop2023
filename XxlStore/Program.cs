@@ -18,6 +18,8 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
+app.UseRouting();
+
 //app.MapControllerRoute("pagination",
 // "Products/Page{productPage}",
 // new { Controller = "Home", action = "Index" });
@@ -35,5 +37,27 @@ app.MapControllerRoute("pagination",
  "Products/Page{productPage}",
  new { Controller = "Home", action = "Index", productPage = 1 });
 app.MapDefaultControllerRoute();
+
+//app.UseEndpoints(endpoints =>
+//{
+
+//    //endpoints.MapControllerRoute("Product",
+//    //   "Product/{id?}",
+//    //   new { controller = "Product", action = "Index" });
+
+//    //endpoints.MapControllerRoute("Admin",
+//    //       "Admin/{action}/{id?}",
+//    //       new { controller = "Admin", action = "Index" });
+
+//    endpoints.MapControllerRoute("Brand",
+//            "Brand/{id?}",
+//            new { controller = "Home", action = "Brand" });
+
+//    endpoints.MapControllerRoute("Home",
+//       "{controller}/{action}/{id?}",
+//       new { controller = "Home", action = "Index" });
+
+//    endpoints.MapDefaultControllerRoute();
+//});
 
 app.Run();

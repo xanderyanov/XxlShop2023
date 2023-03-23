@@ -1,0 +1,3 @@
+﻿@model IEnumerable<string>    <ul class="leftMenu">        <li class="first"><a href="/">Главная</a></li>        @foreach (string category in Model)
+        {
+            @*string url = "/Brand/" + category;*@            string url = category;            <li class="@(category == ViewBag.SelectedCategory? "active": "")"><a href="@url">@category</a></li>        }    </ul>

@@ -12,7 +12,9 @@
     <div class="container-fluid">
         <div class="row">
             <div id="categories" class="col-3">
-                Put something useful here later
+                @*<vc:navigation-menu />*@
+
+                @await Component.InvokeAsync("NavigationMenu")
             </div>
             <div class="col-9">
                 @RenderBody()
