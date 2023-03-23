@@ -16,7 +16,7 @@ namespace XxlStore.Controllers
 
             Bucket.SelectedCategory = id;
 
-            return View("Index", new ProductsListViewModel
+            var Model = new ProductsListViewModel
             {
                 Products = products
                    .Where(p => id == null || p.BrandName == id)
@@ -27,14 +27,13 @@ namespace XxlStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = id == null ?
-                        products.Count() :
-                        products.Where(e =>
-                            e.BrandName == id).Count()
+                    TotalItems = id == null ? products.Count() : products.Where(e => e.BrandName == id).Count()
 
                 },
                 CurrentCategory = id
-            });
+            };
+
+            return View("Index", Model);
         }
         public IActionResult Index(string? category, int productPage = 1)
         {

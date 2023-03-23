@@ -1,6 +1,6 @@
 ﻿@model ProductsListViewModel
 
-<h4>Welcome to XxlStore</h4>
+<h4>@Model.CurrentCategory</h4>
 
 <div class="row">
 @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>()) {
@@ -9,11 +9,6 @@
 
 </div>
 
-@*<div page-model="@Model?.PagingInfo" page-action="Brand" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark"
-     page-class-selected="btn-primary" page-url-category="@Model?.CurrentCategory!"
-     class="btn-group pull-right m-1">
-</div>*@
 
 <div page-model="@Model?.PagingInfo" page-action="Brand" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-outline-dark"
@@ -21,5 +16,9 @@
      class="btn-group pull-right m-1">
 </div>
 
-
+@*<div page-model="@Model?.PagingInfo" page-action="Brand" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" page-url-category="@Model?.CurrentCategory!"
+     class="btn-group pull-right m-1">
+</div>*@
 @*I used the null-forgiving operator (!) in the page-url-category expression so that I can pass a null value*@
