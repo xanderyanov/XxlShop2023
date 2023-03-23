@@ -6,7 +6,7 @@ namespace XxlStore.Controllers
 {
     public class HomeController : Controller
     {
-        public int PageSize = 4;
+        public int PageSize = 16;
         public IActionResult Index(int productPage = 1)
         {
             IEnumerable<Product> Products = Data.ExistingTovars;
