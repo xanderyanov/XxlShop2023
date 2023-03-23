@@ -26,17 +26,17 @@ app.UseRouting();
 //app.MapDefaultControllerRoute();
 
 
-app.MapControllerRoute("catpage",
- "{category}/Page{productPage:int}",
- new { Controller = "Home", action = "Index" });
-app.MapControllerRoute("page", "Page{productPage:int}",
- new { Controller = "Home", action = "Index", productPage = 1 });
-app.MapControllerRoute("category", "{category}",
- new { Controller = "Home", action = "Index", productPage = 1 });
-app.MapControllerRoute("pagination",
- "Products/Page{productPage}",
- new { Controller = "Home", action = "Index", productPage = 1 });
-app.MapDefaultControllerRoute();
+//app.MapControllerRoute("catpage",
+// "{category}/Page{productPage:int}",
+// new { Controller = "Home", action = "Index" });
+//app.MapControllerRoute("page", "Page{productPage:int}",
+// new { Controller = "Home", action = "Index", productPage = 1 });
+//app.MapControllerRoute("category", "{category}",
+// new { Controller = "Home", action = "Index", productPage = 1 });
+//app.MapControllerRoute("pagination",
+// "Products/Page{productPage}",
+// new { Controller = "Home", action = "Index", productPage = 1 });
+//app.MapDefaultControllerRoute();
 
 //app.UseEndpoints(endpoints =>
 //{
@@ -59,5 +59,39 @@ app.MapDefaultControllerRoute();
 
 //    endpoints.MapDefaultControllerRoute();
 //});
+
+app.UseEndpoints(endpoints => {
+
+    //endpoints.MapControllerRoute("route1",
+    //   "blog/{action}",
+    //   new { controller = "Blog", action = "Index" });
+
+    //endpoints.MapControllerRoute("catpage",
+    //    "{category}/Page{productPage:int}",
+    //    new { Controller = "Home", action = "Index" });
+    //endpoints.MapControllerRoute("page", "Page{productPage:int}",
+    //    new { Controller = "Home", action = "Index", productPage = 1 });
+    //endpoints.MapControllerRoute("category", "{category}",
+    //    new { Controller = "Home", action = "Index", productPage = 1 });
+    //endpoints.MapControllerRoute("pagination",
+    //    "Products/Page{productPage}",
+    //    new { Controller = "Home", action = "Index", productPage = 1 });
+
+
+
+    //endpoints.MapControllerRoute("route1",
+    //   "Product/{id?}",
+    //   new { controller = "Product", action = "Product" });
+
+    endpoints.MapControllerRoute("Brand",
+            "Brand/{id?}",
+            new { controller = "Home", action = "Brand" });
+
+    endpoints.MapControllerRoute("route2",
+       "{controller}/{action}/{id?}",
+       new { controller = "Home", action = "Index" });
+
+    endpoints.MapDefaultControllerRoute();
+});
 
 app.Run();

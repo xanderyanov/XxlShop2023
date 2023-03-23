@@ -1,3 +1,2 @@
-﻿@model IEnumerable<string>    <ul class="leftMenu">        <li class="first"><a href="/">Главная</a></li>        @foreach (string category in Model)
-        {
-            @*string url = "/Brand/" + category;*@            string url = category;            <li class="@(category == ViewBag.SelectedCategory? "active": "")"><a href="@url">@category</a></li>        }    </ul>
+﻿@model IEnumerable<string><div class="col-12 d-grid mb-1">    <a class="btn btn-block btn-outline-secondary" href="/">Главная страница</a></div>@foreach (string category in Model) {
+    string url = "/Brand/" + category;    <div class="col-12 d-grid mb-1">        <a class='btn btn-block  @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")' href="@url">@category</a>    </div>}
