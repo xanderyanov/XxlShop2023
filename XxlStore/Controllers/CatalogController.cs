@@ -82,8 +82,6 @@ namespace XxlStore.Controllers
     {
         public int PageSize = 16;
 
-
-
         public IActionResult Brand(string id, int productPage = 1, string viewSettingsStr = null)
         {
             var products = Data.ExistingTovars;
