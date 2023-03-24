@@ -84,8 +84,8 @@ app.UseEndpoints(endpoints => {
     //   new { controller = "Product", action = "Product" });
 
     endpoints.MapControllerRoute("Brand",
-            "Brand/{id?}",
-            new { controller = "Home", action = "Brand" });
+        "Brand/{id?}",
+        new { controller = "Catalog", action = "Brand" });
 
     endpoints.MapControllerRoute("Default",
        "{controller}/{action}/{id?}",

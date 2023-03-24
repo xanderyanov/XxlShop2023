@@ -11,16 +11,15 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div id="categories" class="col-3">
-                @*<vc:navigation-menu />*@
-
-                @*@await Component.InvokeAsync("NavigationMenu")*@
-
-                @{ViewStart.NavMenu();}
-            </div>
-            <div class="col-9">
-                @RenderBody()
-            </div>
+            <header class="d-flex justify-content-center py-3">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
+                    <li class="nav-item"><a href="/Catalog" class="nav-link">Каталог</a></li>
+                </ul>
+            </header>
+        </div>
+        <div class="row">
+            @RenderBody()
         </div>
     </div>
 </body>
