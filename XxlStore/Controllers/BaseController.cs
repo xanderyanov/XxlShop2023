@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace XxlStore.Controllers
+namespace XxlStore
 {
     public class BaseBucket
     {
@@ -21,6 +21,16 @@ namespace XxlStore.Controllers
         {
             ViewData["Bucket"] = Bucket;
             base.OnActionExecuting(context);
+        }
+
+        public class ViewSettingsClass
+        {
+            public bool NewOnly { get; set; } = false;
+            public bool SaleLeaderOnly { get; set; } = false;
+            public string InexpensivePrice { get; set; }
+
+            public Dictionary<string, List<string>> CheckedFilters { get; set; } = new();
+
         }
     }
 }

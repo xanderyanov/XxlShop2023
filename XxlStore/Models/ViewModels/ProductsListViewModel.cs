@@ -1,4 +1,6 @@
-﻿namespace XxlStore.Models.ViewModels
+﻿using static XxlStore.BaseController;
+
+namespace XxlStore.Models.ViewModels
 {
     public class ProductsListViewModel
     {
@@ -7,5 +9,7 @@
         public PagingInfo PagingInfo { get; set; } = new();
 
         public string? CurrentCategory { get; set; }
+
+        public ViewSettingsClass ViewSettings { get; set; }
     }
 }

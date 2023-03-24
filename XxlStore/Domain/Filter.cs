@@ -1,5 +1,4 @@
-﻿
-namespace XxlStore
+﻿namespace XxlStore
 {
 
     public class Filter

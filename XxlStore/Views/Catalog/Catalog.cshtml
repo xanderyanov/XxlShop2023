@@ -1,0 +1,145 @@
+﻿@using static XxlStore.BaseController
+@model ProductsListViewModel
+
+@{
+    ViewSettingsClass viewSettings = ViewBag.ViewSettings as ViewSettingsClass;
+}
+
+<script>
+
+    $(function () {
+        $(".layout")
+        .click(function (ev) {
+            $this = $(ev.target);
+            if ($this.is(".JS_Filters_run")) {
+                applyFilters();
+                return;
+            }
+        });
+    });
+
+    var NoFilterURL = window.location.href.split('?')[0];
+
+    function collectIds(idElems) {
+        var result = "";
+        for (var i = 0; i < idElems.length; i++) {
+            if (idElems[i].checked) {
+                var idparts = $(idElems[i]).data("filter");
+                console.log("checked - " + idparts);
+                if (result !== "") result += "&f_";
+                result += idparts;
+            }
+        }
+        return result;
+    }
+
+    function applyFilters() {
+        var params = collectIds($("input[data-val='filter']"));
+
+        var newUrl = NoFilterURL + "?f_" + params;
+
+        console.log("NoFilterURL - " + newUrl);
+
+        window.location.href = newUrl;
+    }
+
+</script>
+
+<h4>@Model.CurrentCategory</h4>
+
+
+<div id="categories" class="col-3">
+    @*<vc:navigation-menu />*@
+    @*@await Component.InvokeAsync("NavigationMenu")*@
+
+    @{
+        ViewStart.NavMenu();
+    }
+</div>
+<div class="col-6">
+    <div class="row">
+        @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>()) {
+            <partial name="ProductSummary" model="p" />
+        }
+
+    </div>
+
+
+    <div page-model="@Model?.PagingInfo" page-action="Brand" page-classes-enabled="true"
+            page-class="btn" page-class-normal="btn-outline-dark"
+            page-class-selected="btn-primary"
+            class="btn-group pull-right m-1">
+    </div>
+</div>
+
+<div class="col-3">
+    @if (Filter.AllGenders != null) {
+        var checkedValues = new List<string>();
+        bool keyExists = viewSettings.CheckedFilters.ContainsKey("Gender");
+        if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["Gender"]; }
+        <ul class="mb-2">
+            @foreach (var i in Filter.AllGenders) {
+                if (i == "") continue;
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@("Gender=" + Base64Fix.Tuda(i))" data-val="filter">
+                        <label class="form-check-label" for="">
+                            @i
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (Filter.AllCaseForm != null) {
+        var checkedValues = new List<string>();
+        bool keyExists = viewSettings.CheckedFilters.ContainsKey("CaseForm");
+        if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["CaseForm"]; }
+        <ul class="mb-2">
+            @foreach (var i in Filter.AllCaseForm) {
+                if (i == "") continue;
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@("CaseForm=" + Base64Fix.Tuda(i))" data-val="filter">
+                        <label class="form-check-label" for="">
+                            @i
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (Filter.AllGlass != null) {
+        var checkedValues = new List<string>();
+        bool keyExists = viewSettings.CheckedFilters.ContainsKey("Glass");
+        if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["Glass"]; }
+        <ul class="mb-2">
+            @foreach (var i in Filter.AllGlass) {
+                if (i == "") continue;
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@("Glass=" + Base64Fix.Tuda(i))" data-val="filter">
+                        <label class="form-check-label" for="">
+                            @i
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    <div class="btn btn-primary JS_Filters_run">Показать результаты</div>
+</div>
+
+
+
+
+
+@*<div page-model="@Model?.PagingInfo" page-action="Brand" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" page-url-category="@Model?.CurrentCategory!"
+     class="btn-group pull-right m-1">
+</div>*@
+@*I used the null-forgiving operator (!) in the page-url-category expression so that I can pass a null value*@
