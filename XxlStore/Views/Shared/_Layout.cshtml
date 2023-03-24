@@ -14,7 +14,9 @@
             <div id="categories" class="col-3">
                 @*<vc:navigation-menu />*@
 
-                @await Component.InvokeAsync("NavigationMenu")
+                @*@await Component.InvokeAsync("NavigationMenu")*@
+
+                @{ViewStart.NavMenu();}
             </div>
             <div class="col-9">
                 @RenderBody()

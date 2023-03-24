@@ -5,9 +5,9 @@ namespace XxlStore.Components
 {
     //public class NavigationMenuViewComponent : ViewComponent
     //{
-    //    public string Invoke()
+    //    public Task<string> InvokeAsync()
     //    {
-    //        return "Hello from the Nav View Component";
+    //        return Task.FromResult("Hello from the Nav View Component");
     //    }
     //}
 
