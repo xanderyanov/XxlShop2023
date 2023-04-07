@@ -5,6 +5,7 @@ using XxlStore;
 using XxlStore.Models.ViewModels;
 using Newtonsoft.Json;
 using System.Reflection;
+using Amazon.Runtime.Internal;
 
 namespace XxlStore.Controllers
 {
@@ -101,12 +102,14 @@ namespace XxlStore.Controllers
 
             IEnumerable<Product> Products = Data.ExistingTovars;
 
-            Products = Products.Where(p =>
-                (!viewSettings.NewOnly || p.FlagNew) &&
-                (!viewSettings.SaleLeaderOnly || p.FlagSaleLeader) &&
-                (string.IsNullOrEmpty(viewSettings.InexpensivePrice) || p.DiscountPrice < Double.Parse(viewSettings.InexpensivePrice)) &&
-                (p.Gender == "Мужские")
-            );
+            Filter.CollectPageFilterValues(Products);
+
+            //Products = Products.Where(p =>
+            //    (!viewSettings.NewOnly || p.FlagNew) &&
+            //    (!viewSettings.SaleLeaderOnly || p.FlagSaleLeader) &&
+            //    (string.IsNullOrEmpty(viewSettings.InexpensivePrice) || p.DiscountPrice < Double.Parse(viewSettings.InexpensivePrice)) &&
+            //    (p.Gender == "Мужские")
+            //);
 
             Products = Products
                 .Where(p => id == null || p.BrandName == id);
@@ -132,7 +135,7 @@ namespace XxlStore.Controllers
         }
 
         //public Dictionary<string, string> CheckedFilters = new();
-        public IActionResult Index(string id, int productPage, string viewSettingsStr, string filter)
+        public IActionResult Index(string id, int productPage, string viewSettingsStr)
         {
             if (productPage == 0) productPage = 1;
 
@@ -155,6 +158,8 @@ namespace XxlStore.Controllers
 
             Filter.CollectPageFilterValues(Products);
 
+            //ППРОЧИТАТЬ И ВСПОМНИТЬ!!!
+            //Request.Query - содержит пары ключ-значениЯ, которые он делает из строки параметров ключ-значениЕ, ключ-значениЕ - при совпадении ключей.
             // ?f_Case=Прямоуг&f_Case=Овал&f_Gender=Male&f_Gender=Uni
             // Key: f_Case
             // Value: { "Прямоуг", "Овал" }
@@ -166,16 +171,17 @@ namespace XxlStore.Controllers
 
             IEnumerable<Product> productSource = Data.ExistingTovars;
 
-            foreach (var pair in Request.Query) {
+            foreach (var pair in Request.Query) { //
                 string filterKey = pair.Key;
                 if (filterKey.StartsWith("f_")) {
                     string propName = filterKey[2..];
                     var values = pair.Value;
-                    PropertyInfo PI = typeof(Product).GetProperty(propName);
+
+                    PropertyInfo PI = typeof(Product).GetProperty(propName); //проверяем, есть ли в Product свойство с именем propName, которое мы получили. И если есть, то код ниже выполняется.
                     if (PI != null) {
-                        List<string> decodedValues = values.Select(x => Base64Fix.Obratno(x)).ToList();
-                        viewSettings.CheckedFilters.Add(propName, decodedValues);
-                        List<Product> thisStepProds = productSource.Where(x => decodedValues.Contains(PI.GetValue(x) as string)).ToList();
+                        List<string> decodedValues = values.Select(x => Base64Fix.Obratno(x)).ToList(); //получаем список свойств по-русски, декодировав наш полученный values
+                        viewSettings.CheckedFilters.Add(propName, decodedValues); // подготовка к следующему заапросу с сохранением информации в viewSettings
+                        List<Product> thisStepProds = productSource.Where(x => decodedValues.Contains(PI.GetValue(x) as string)).ToList(); //фильтруем 
                         productSource = thisStepProds;
                     }
                 }
@@ -197,7 +203,7 @@ namespace XxlStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = Data.ExistingTovars.Count()
+                    TotalItems = productSource.Count()
                 },
                 CurrentCategory = id
             });
