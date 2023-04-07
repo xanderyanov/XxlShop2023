@@ -6,6 +6,7 @@ using XxlStore.Models.ViewModels;
 using Newtonsoft.Json;
 using System.Reflection;
 using Amazon.Runtime.Internal;
+using XxlStore.Infrastructure;
 
 namespace XxlStore.Controllers
 {
@@ -17,14 +18,15 @@ namespace XxlStore.Controllers
         {
             var products = Data.ExistingTovars;
 
-            ViewSettingsClass viewSettings = null;
-            try {
-                viewSettings = JsonConvert.DeserializeObject<ViewSettingsClass>(Encoding.UTF8.GetString(Convert.FromBase64String(viewSettingsStr)));
-            }
-            catch {
-                viewSettings = new();
-            }
+            //ViewSettingsClass viewSettings = null;
+            //try {
+            //    viewSettings = JsonConvert.DeserializeObject<ViewSettingsClass>(Encoding.UTF8.GetString(Convert.FromBase64String(viewSettingsStr)));
+            //}
+            //catch {
+            //    viewSettings = new();
+            //}
 
+            var viewSettings = new ViewSettingsClass();
             ViewBag.ViewSettings = viewSettings;
 
             Bucket.SelectedCategory = id;
@@ -32,19 +34,19 @@ namespace XxlStore.Controllers
 
             IEnumerable<Product> Products = Data.ExistingTovars;
 
-            
-
             IEnumerable<Product> productSource = Data.ExistingTovars;
 
-            //ППРОЧИТАТЬ И ВСПОМНИТЬ!!!
-            //Request.Query - содержит пары ключ-значениЯ, которые он делает из строки параметров ключ-значениЕ, ключ-значениЕ - при совпадении ключей.
-            // ?f_Case=Прямоуг&f_Case=Овал&f_Gender=Male&f_Gender=Uni
-            // Key: f_Case
-            // Value: { "Прямоуг", "Овал" }
-            // Key: f_Gender
-            // Value: { "Male", "Uni" }
+            /// <summary>
+            /// Request.Query - содержит пары ключ-значениЯ, которые он делает из строки параметров ключ-значениЕ, ключ-значениЕ - при совпадении ключей.
+            /// ?f_Case=Прямоуг&f_Case=Овал&f_Gender=Male&f_Gender=Uni
+            /// Key: f_Case
+            /// Value: { "Прямоуг", "Овал" }
+            /// Key: f_Gender
+            /// Value: { "Male", "Uni" }
+            /// </summary>
 
-            foreach (var pair in Request.Query) { //
+
+            foreach (var pair in Request.Query) {
                 string filterKey = pair.Key;
                 if (filterKey.StartsWith("f_")) {
                     string propName = filterKey[2..];
@@ -60,7 +62,6 @@ namespace XxlStore.Controllers
                 }
             }
 
-            
 
             Products = productSource
                 .Where(p => id == null || p.BrandName == id)
@@ -80,13 +81,11 @@ namespace XxlStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = id == null ? products.Count() : products.Where(e => e.BrandName == id).Count()
+                    TotalItems = id == null ? products.Count() : productSource.Where(e => e.BrandName == id).Count()
                     //TotalItems = productSource.Count()
                 },
                 CurrentCategory = id
             });
         }
-
-        
     }
 }

@@ -6,6 +6,7 @@
         public static List<string> AllGenders { get; private set; }
         
         public static List<string> AllCaseForm { get; private set; }
+        public static List<string> AllCaseMaterial { get; private set; }
         
         public static List<string> AllGlass { get; private set; }
 
@@ -14,6 +15,7 @@
         {
             AllGenders = Data.ExistingTovars.Select(x => x.Gender).ToHashSet().ToList();
             AllCaseForm = Data.ExistingTovars.Select(x => x.CaseForm).ToHashSet().ToList();
+            AllCaseMaterial = Data.ExistingTovars.Select(x => x.CaseMaterial).ToHashSet().ToList();
             AllGlass = Data.ExistingTovars.Select(x => x.Glass).ToHashSet().ToList();
         }
 
@@ -22,6 +24,7 @@
         {
             AllGenders = Products.Select(x => x.Gender).ToHashSet().ToList();
             AllCaseForm = Products.Select(x => x.CaseForm).ToHashSet().ToList();
+            AllCaseMaterial = Products.Select(x => x.CaseMaterial).ToHashSet().ToList();
             AllGlass = Products.Select(x => x.Glass).ToHashSet().ToList();
         }        
 
@@ -30,6 +33,7 @@
         {
             AllGenders = null;
             AllCaseForm = null;
+            AllCaseMaterial = null;
             AllGlass = null;
         }
 

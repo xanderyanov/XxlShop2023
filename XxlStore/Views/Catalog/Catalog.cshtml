@@ -77,6 +77,7 @@
         var checkedValues = new List<string>();
         bool keyExists = viewSettings.CheckedFilters.ContainsKey("Gender");
         if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["Gender"]; }
+        <h3>Пол:</h3>
         <ul class="mb-2">
             @foreach (var i in Filter.AllGenders) {
                 if (i == "") continue;
@@ -96,6 +97,7 @@
         var checkedValues = new List<string>();
         bool keyExists = viewSettings.CheckedFilters.ContainsKey("CaseForm");
         if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["CaseForm"]; }
+        <h3>Форма корпуса:</h3>
         <ul class="mb-2">
             @foreach (var i in Filter.AllCaseForm) {
                 if (i == "") continue;
@@ -109,12 +111,33 @@
                 </li>
             }
         </ul>
+    }    
+    
+    @if (Filter.AllCaseMaterial != null) {
+        var checkedValues = new List<string>();
+        bool keyExists = viewSettings.CheckedFilters.ContainsKey("CaseMaterial");
+        if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["CaseMaterial"]; }
+        <h3>Материал корпуса:</h3>
+        <ul class="mb-2">
+            @foreach (var i in Filter.AllCaseMaterial) {
+                if (i == "") continue;
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@("CaseMaterial=" + Base64Fix.Tuda(i))" data-val="filter">
+                        <label class="form-check-label" for="">
+                            @i
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
     }
 
     @if (Filter.AllGlass != null) {
         var checkedValues = new List<string>();
         bool keyExists = viewSettings.CheckedFilters.ContainsKey("Glass");
         if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["Glass"]; }
+        <h3>Стекло:</h3>
         <ul class="mb-2">
             @foreach (var i in Filter.AllGlass) {
                 if (i == "") continue;

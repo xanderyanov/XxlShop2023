@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using XxlStore.Models.ViewModels;
 using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
+using Amazon.Runtime.Internal;
+using System.Data;
+using static XxlStore.BaseController;
+using System.Reflection;
+using System.Text;
 
 namespace XxlStore.Infrastructure
 {
@@ -30,20 +35,35 @@ namespace XxlStore.Infrastructure
 
 
         public bool PageClassesEnabled { get; set; } = false;
+
+        public string RequestQuery { get; set; } = String.Empty;
         public string PageClass { get; set; } = String.Empty;
         public string PageClassNormal { get; set; } = String.Empty;
         public string PageClassSelected { get; set; } = String.Empty;
+
         public override void Process(TagHelperContext context,
         TagHelperOutput output)
         {
             if (ViewContext != null && PageModel != null) {
+                var viewSettings = ViewContext.ViewData["ViewSettings"] as ViewSettingsClass;
+
+                StringBuilder SB = new();
+                if (viewSettings != null) { 
+                    foreach (var pair in viewSettings.CheckedFilters) {
+                        var values = pair.Value.ToList();
+                        foreach (var value in values) {
+                            SB.Append('&').Append("f_").Append(pair.Key).Append('=').Append(Base64Fix.Tuda(value.ToString()));
+                        }
+                    }
+                }
+
                 IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
                 TagBuilder result = new TagBuilder("div");
                 for (int i = 1; i <= PageModel.TotalPages; i++) {
                     TagBuilder tag = new TagBuilder("a");
                     
                     PageUrlValues["productPage"] = i;
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues) + SB.ToString();
                     
                     if (PageClassesEnabled) {
                         tag.AddCssClass(PageClass);
