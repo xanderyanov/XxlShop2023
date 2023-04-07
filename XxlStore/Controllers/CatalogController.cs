@@ -9,81 +9,11 @@ using Amazon.Runtime.Internal;
 
 namespace XxlStore.Controllers
 {
-    //public class CatalogController : BaseController
-    //{
-    //    public int PageSize = 16;
-
-    //    public IActionResult Brand(string id, int productPage = 1, string viewSettingsStr = null)
-    //    {
-    //        var products = Data.ExistingTovars;
-
-    //        ViewSettingsClass viewSettings = null;
-    //        try {
-    //            viewSettings = JsonConvert.DeserializeObject<ViewSettingsClass>(Encoding.UTF8.GetString(Convert.FromBase64String(viewSettingsStr)));
-    //        }
-    //        catch {
-    //            viewSettings = new();
-    //        }
-
-    //        IEnumerable<Product> Products = Data.ExistingTovars;
-
-    //        ViewBag.ViewSettings = viewSettings;
-
-    //        Bucket.SelectedCategory = id;
-
-    //        Products = Products
-    //            .Where(p => id == null || p.BrandName == id);
-
-    //        Filter.CollectPageFilterValues(Products);
-
-    //        var Model = new ProductsListViewModel
-    //        {
-    //            Products = products
-    //               .Where(p => id == null || p.BrandName == id)
-    //               //.OrderBy(p => p.Id)
-    //               .Skip((productPage - 1) * PageSize)
-    //               .Take(PageSize),
-    //            PagingInfo = new PagingInfo
-    //            {
-    //                CurrentPage = productPage,
-    //                ItemsPerPage = PageSize,
-    //                TotalItems = id == null ? products.Count() : products.Where(e => e.BrandName == id).Count()
-
-    //            },
-    //            CurrentCategory = id
-    //        };
-
-    //        return View("Index", Model);
-    //    }
-    //    public IActionResult Index(string? category, int productPage = 1)
-    //    {
-    //        IEnumerable<Product> Products = Data.ExistingTovars;
-
-    //        IEnumerable<Product> filteredProducts = Products.Where(x => x.FlagNew);
-
-    //        return View(new ProductsListViewModel
-    //        {
-    //            Products = filteredProducts
-    //            .Where(p => category == null || p.BrandName == category)
-    //            .Skip((productPage - 1) * PageSize)
-    //            .Take(PageSize),
-    //            PagingInfo = new PagingInfo
-    //            {
-    //                CurrentPage = productPage,
-    //                ItemsPerPage = PageSize,
-    //                TotalItems = filteredProducts.Count()
-    //            },
-    //            CurrentCategory = category
-    //        });
-
-    //    }
-    //}
-
     public class CatalogController : BaseController
     {
         public int PageSize = 16;
 
-        public IActionResult Brand(string id, int productPage = 1, string viewSettingsStr = null)
+        public IActionResult Index(string id, int productPage = 1, string viewSettingsStr = null)
         {
             var products = Data.ExistingTovars;
 
@@ -102,61 +32,9 @@ namespace XxlStore.Controllers
 
             IEnumerable<Product> Products = Data.ExistingTovars;
 
-            Filter.CollectPageFilterValues(Products);
+            
 
-            //Products = Products.Where(p =>
-            //    (!viewSettings.NewOnly || p.FlagNew) &&
-            //    (!viewSettings.SaleLeaderOnly || p.FlagSaleLeader) &&
-            //    (string.IsNullOrEmpty(viewSettings.InexpensivePrice) || p.DiscountPrice < Double.Parse(viewSettings.InexpensivePrice)) &&
-            //    (p.Gender == "Мужские")
-            //);
-
-            Products = Products
-                .Where(p => id == null || p.BrandName == id);
-
-            Filter.CollectPageFilterValues(Products);
-
-            Products = Products
-                .Skip((productPage - 1) * PageSize)
-                .Take(PageSize);
-
-            return View("Catalog", new ProductsListViewModel
-            {
-                Products = Products,
-                ViewSettings = viewSettings,
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = productPage,
-                    ItemsPerPage = PageSize,
-                    TotalItems = id == null ? products.Count() : products.Where(e => e.BrandName == id).Count()
-                },
-                CurrentCategory = id
-            });
-        }
-
-        //public Dictionary<string, string> CheckedFilters = new();
-        public IActionResult Index(string id, int productPage, string viewSettingsStr)
-        {
-            if (productPage == 0) productPage = 1;
-
-            ViewSettingsClass viewSettings = null;
-            try {
-                viewSettings = JsonConvert.DeserializeObject<ViewSettingsClass>(Encoding.UTF8.GetString(Convert.FromBase64String(viewSettingsStr)));
-            }
-            catch {
-                viewSettings = new();
-            }
-
-            /*************/
-            ViewData["Booo"] = new[] { 10, 20, 30 };
-            ViewBag.ViewBagData = new[] { 100, 200, 300 };
-            /*************/
-
-            ViewBag.ViewSettings = viewSettings;
-
-            IEnumerable<Product> Products = Data.ExistingTovars;
-
-            Filter.CollectPageFilterValues(Products);
+            IEnumerable<Product> productSource = Data.ExistingTovars;
 
             //ППРОЧИТАТЬ И ВСПОМНИТЬ!!!
             //Request.Query - содержит пары ключ-значениЯ, которые он делает из строки параметров ключ-значениЕ, ключ-значениЕ - при совпадении ключей.
@@ -165,11 +43,6 @@ namespace XxlStore.Controllers
             // Value: { "Прямоуг", "Овал" }
             // Key: f_Gender
             // Value: { "Male", "Uni" }
-
-            //public string propertyName;
-            //public string propertyName;
-
-            IEnumerable<Product> productSource = Data.ExistingTovars;
 
             foreach (var pair in Request.Query) { //
                 string filterKey = pair.Key;
@@ -187,13 +60,17 @@ namespace XxlStore.Controllers
                 }
             }
 
-
-            //filter = Request.Query["f"];
+            
 
             Products = productSource
+                .Where(p => id == null || p.BrandName == id)
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize);
 
+            var ProductsForFiltersElements = productSource
+                .Where(p => id == null || p.BrandName == id);
+
+            Filter.CollectPageFilterValues(ProductsForFiltersElements);
 
             return View("Catalog", new ProductsListViewModel
             {
@@ -203,10 +80,13 @@ namespace XxlStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = productSource.Count()
+                    TotalItems = id == null ? products.Count() : products.Where(e => e.BrandName == id).Count()
+                    //TotalItems = productSource.Count()
                 },
                 CurrentCategory = id
             });
         }
+
+        
     }
 }
