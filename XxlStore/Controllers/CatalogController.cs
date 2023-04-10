@@ -18,8 +18,6 @@ namespace XxlStore.Controllers
         {
             var products = Data.ExistingTovars;
 
-            
-
             var viewSettings = new ViewSettingsClass();
             ViewBag.ViewSettings = viewSettings;
 
@@ -57,12 +55,10 @@ namespace XxlStore.Controllers
                 }
             }
 
-
             Products = productSource
                 .Where(p => id == null || p.BrandName == id)
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize);
-            
 
             var ProductsForFiltersElements = productSource
                 .Where(p => id == null || p.BrandName == id);
