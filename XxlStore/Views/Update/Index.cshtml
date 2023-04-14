@@ -1,9 +1,28 @@
-﻿@model SingleFileModel
+﻿@using XxlStore.Controllers;
+@model SingleFileModel
 
 @{
     ViewData["Title"] = "Single File Upload";
 
 }
+
+<script>
+    function StartBaseUpdate() {
+        $.ajax({
+            type: "POST",
+            url: "/Update/BaseUpdate",
+            async: true,
+            success: function () {
+                
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    }
+</script>
+
+
 <form asp-action="Upload" asp-controller="Update" method="post" enctype="multipart/form-data">
     @if (Model.IsResponse) {
         if (Model.IsSuccess) {
@@ -20,7 +39,7 @@
         <div class="col-12">
             <label class="col-form-label">Enter File Name For Save</label>
             <input asp-for="FileName" class="form-control" />
-            <span asp-validation-for="FileName" class="text-danger"></span>
+            @*<span asp-validation-for="FileName" class="text-danger"></span>*@
         </div>
     </div>
 
@@ -28,7 +47,7 @@
         <div class="col-12">
             <label class="col-form-label">Select File</label>
             <input asp-for="File" class="form-control" />
-            <span asp-validation-for="File" class="text-danger"></span>
+            @*<span asp-validation-for="File" class="text-danger"></span>*@
         </div>
     </div>
 
@@ -39,3 +58,7 @@
         </div>
     </div>
 </form>
+
+<div class="update btn" onclick="StartBaseUpdate()">Обновить</div>
+
+
