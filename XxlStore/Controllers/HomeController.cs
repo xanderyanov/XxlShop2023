@@ -12,7 +12,7 @@ namespace XxlStore.Controllers
 
         public IActionResult Index(int productPage = 1)
         {
-            IEnumerable<Product> Products = Data.ExistingTovars;
+            IEnumerable<Product> Products = Data.MainDomain.ExistingTovars;
 
             IEnumerable<Product> filteredProducts = Products.Where(x => x.FlagNew);
 

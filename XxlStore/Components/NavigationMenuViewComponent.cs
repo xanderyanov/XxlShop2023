@@ -16,7 +16,7 @@ namespace XxlStore.Components
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["id"];
-            return View(Data.Categories);
+            return View(Data.MainDomain.Categories);
         }
     }
 }

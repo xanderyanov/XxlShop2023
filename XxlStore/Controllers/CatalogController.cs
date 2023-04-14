@@ -16,7 +16,9 @@ namespace XxlStore.Controllers
 
         public IActionResult Index(string id, int productPage = 1)
         {
-            var products = Data.ExistingTovars;
+            Domain domain = Data.MainDomain;
+
+            var products = domain.ExistingTovars;
 
             var viewSettings = new ViewSettingsClass();
             ViewBag.ViewSettings = viewSettings;
@@ -24,9 +26,9 @@ namespace XxlStore.Controllers
             Bucket.SelectedCategory = id;
             Bucket.Title = $"Часы {id} в магазине Мир Часов XXL";
 
-            IEnumerable<Product> Products = Data.ExistingTovars;
+            IEnumerable<Product> Products = domain.ExistingTovars;
 
-            IEnumerable<Product> productSource = Data.ExistingTovars;
+            IEnumerable<Product> productSource = domain.ExistingTovars;
 
             /// <summary>
             /// Request.Query - содержит пары ключ-значениЯ, которые он делает из строки параметров ключ-значениЕ, ключ-значениЕ - при совпадении ключей.

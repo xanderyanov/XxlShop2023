@@ -10,7 +10,7 @@ namespace XxlStore.Models
 
         [DataType(DataType.Upload)]
         [MaxFileSize(5 * 1024 * 1024)]
-        [AllowedExtensions(new string[] { ".jpg", ".png" })]
+        [AllowedExtensions(new string[] { ".jpg", ".png", ".csv" })]
         public IFormFile File { get; set; }
     }
 

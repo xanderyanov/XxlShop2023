@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using XxlStore.Models;
 
 namespace XxlStore.Controllers
@@ -50,12 +51,15 @@ namespace XxlStore.Controllers
                 model.Message = "File upload successfully";
 
                 //if (IsFileValid(model.File)) {
-                    
+
                 //} else {
                 //    model.IsSuccess = false;
                 //    model.Message = "Fuck you!";
                 //}
 
+                Data.ImportCSV(fileName);
+
+                Data.LoadObjects();
             }
             return View("Index", model);
         }

@@ -9,15 +9,20 @@ using MongoDB.Driver;
 
 namespace XxlStore;
 
+public class Domain {
+
+    public List<Product> ExistingTovars;
+
+    public List<string> Categories;
+}
+
 public static class Data
 {
     public static IMongoDatabase DB;
 
-    public static List<Product> ExistingTovars;
+    public static Domain MainDomain;
 
-    public static List<string> Categories;
-
-    public static List<string> Levels;
+    //public static List<string> Levels;
 
     public static IMongoCollection<Product> productsCollection;
 
@@ -29,11 +34,19 @@ public static class Data
         var mongoClient = new MongoClient(dbConfig.ConnectionString);
         DB = mongoClient.GetDatabase(dbConfig.DBName);
 
+        LoadObjects();
+    }
+
+    public static void LoadObjects()
+    {
+        Domain domain = new Domain();
+
         //Каталог и все такое
         productsCollection = DB.GetCollection<Product>("products");
-        ExistingTovars = GetAllProducts();
-        Categories = ExistingTovars.Select(x => x.CatLev[2]).Distinct().OrderBy(x => x).ToList();
+        domain.ExistingTovars = GetAllProducts();
+        domain.Categories = domain.ExistingTovars.Select(x => x.CatLev[2]).Distinct().OrderBy(x => x).ToList();
 
+        MainDomain = domain;
     }
 
     private static List<Product> GetAllProducts()
@@ -85,9 +98,13 @@ public static class Data
     }
 
 
-    public static void ImportCSV()
+    public static void ImportCSV(string filename)
     {
-        string[] lines = System.IO.File.ReadAllLines(@"/var/www/xxlstore/data/tovar!.csv", System.Text.Encoding.GetEncoding(1251));
+
+
+
+        //string[] lines = System.IO.File.ReadAllLines(@"/var/www/xxlstore/data/tovar!.csv", System.Text.Encoding.GetEncoding(1251));
+        string[] lines = System.IO.File.ReadAllLines(@"wwwroot/files/" + @filename, System.Text.Encoding.GetEncoding(1251));
         CSVFile csv = new(lines, ';', '"',
             "Код;Иерархия;Наименование;Артикул;Количество;Цена;Бренд;ИмяФайлаИзображения;Новинка;HAPPY_МОЛЛОстаток;ГлобусОстаток;ЛазурныйОстаток;ОранжевыйОстаток;ПассажОстаток;ТауОстаток;10 летняя батарея;Bluetooth;Барометр\\альтиметр;Браслет;Будильник;Включение,отключение звука кнопок;Водозащита;Грязеустойчивость;Дополнительно;Индикатор приливов и отливов;Индикатор уровня заряда аккумулятора;Компас;Материал корпуса;Мелодия;Мировое время;Отображение данных о Луне;Пол;Прием радиосигнала точного времени;Размер корпуса;Резерв хода;Сверх яркая подсветка;Связь со смартфоном;Скидка;Солнечная батарея;Стекло;Страна бренда;Страна производитель;Таймер;Таймер рыбалки;Термометр;Тип механизма;Ударопрочность;Устойчивость к воздействию магнитного поля;Форма корпуса;Функция поиска телефона;Функция секундомера;Хит продаж;Ход стрелки;Хронограф;Циферблат;Шагомер;ЦенаСоСкидкой",
             "Code1C;Path;Name;Article;TotalCount;Price;BrandName;ImgFileName;FlagNew;HM_Balance;GL_Balance;LZ_Balance;OR_Balance;PZ_Balance;TA_Balance;Battery10;Bluetooth;Barometer;Wristlet;Alarm;ButtonsSoundToggler;WaterProtection;DirtResistance;Extra;TideIndicator;BatteryLevelIndicator;Compass;CaseMaterial;Melody;WorldTime;MoonData;Gender;ExactTimeRadioSignal;CaseSize;PowerReserve;ExtraBrightBacklight;SmartphoneConnection;Discount;SolarBattery;Glass;BrandCountry;ProducingCountry;Taimer;FishingTimer;Thermometer;MechanismType;ImpactResistance;MagneticFieldResistance;CaseForm;PhoneSearchFunction;Stopwatch;FlagSaleLeader;ClockhandMovement;Chronograph;ClockFace;Pedometer;DiscountPrice");
@@ -104,7 +121,7 @@ public static class Data
             string code1c = csv["Code1C"];
             //Console.WriteLine(Categories[1]);
 
-            var tovar = ExistingTovars.FirstOrDefault(x => x.Code1C == code1c);
+            var tovar = MainDomain.ExistingTovars.FirstOrDefault(x => x.Code1C == code1c);
             if (tovar == null) tovar = new() { Id = ObjectId.GenerateNewId(), Code1C = code1c };
 
             bool mod = false;

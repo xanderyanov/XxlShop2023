@@ -15,7 +15,7 @@ namespace XxlStore.Controllers
                 return NotFound();
             }
 
-            Product product = Data.ExistingTovars.Find(x => x.Id == Id);
+            Product product = Data.MainDomain.ExistingTovars.Find(x => x.Id == Id);
 
             return View("Product", product);
         }

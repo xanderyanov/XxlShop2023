@@ -13,10 +13,11 @@
 
         public static void CollectGlobalFilterValues()
         {
-            AllGenders = Data.ExistingTovars.Select(x => x.Gender).ToHashSet().ToList();
-            AllCaseForm = Data.ExistingTovars.Select(x => x.CaseForm).ToHashSet().ToList();
-            AllCaseMaterial = Data.ExistingTovars.Select(x => x.CaseMaterial).ToHashSet().ToList();
-            AllGlass = Data.ExistingTovars.Select(x => x.Glass).ToHashSet().ToList();
+            Domain domain = Data.MainDomain;
+            AllGenders = domain.ExistingTovars.Select(x => x.Gender).ToHashSet().ToList();
+            AllCaseForm = domain.ExistingTovars.Select(x => x.CaseForm).ToHashSet().ToList();
+            AllCaseMaterial = domain.ExistingTovars.Select(x => x.CaseMaterial).ToHashSet().ToList();
+            AllGlass = domain.ExistingTovars.Select(x => x.Glass).ToHashSet().ToList();
         }
 
 
