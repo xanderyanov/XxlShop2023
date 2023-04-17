@@ -1,0 +1,82 @@
+﻿@model List<Post>
+
+@{
+    ViewData["Title"] = "Блог";
+
+    DateTime currentDate = DateTime.UtcNow;
+}
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <div class="col-12">
+                <h1>Добавить статью</h1>
+                <div class="addPost">
+                    <form action="/Blog/CreatePost" method="post">
+                        <div class="mb-3">
+                            <label class="form-label" for="PostDate">Date</label>
+                            <input class="form-control" id="PostDate" name="PostDate" type="text" value="@currentDate.ToString("dd.mm.yyyy hh:mm:ss")">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Title">Title</label>
+                            <input class="form-control" id="Title" name="Title" type="text" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Text">Text</label>
+                            <textarea class="form-control" id="Text" name="Text" type="text" value=""></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Author">Author</label>
+                            <input class="form-control" id="Author" name="Author" type="text" value="">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Заголовок</th>
+                        <th>Автор</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var post in Model) {
+                    <tr>
+                        <td>@post.PostDate</td>
+                        <td>@post.Title</td>
+                        <td>@post.Author</td>
+                        <td>
+                            <form style="display: inline-block;" action="/Blog/DeletePost" method="post" onsubmit="return ConfirmDeleteRu(@post.Title);">
+                                <input id="Id" name="Id" value="@post.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Удалить" type="submit">
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        function ConfirmDeleteRu(name) {
+            console.log("ConfirmDeleteRu start");
+            return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+        }
+    })
+</script>
+

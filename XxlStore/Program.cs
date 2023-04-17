@@ -30,8 +30,20 @@ app.UseEndpoints(endpoints => {
         "Catalog/{id?}",
         new { controller = "Catalog", action = "Index" });
 
+    endpoints.MapControllerRoute("BlogEdit",
+       "Blog/Edit/{id?}",
+       new { controller = "Blog", action = "Edit" });      
+    
+    endpoints.MapControllerRoute("CreatePost",
+       "Blog/CreatePost/{id?}",
+       new { controller = "Blog", action = "CreatePost" });
+
+    endpoints.MapControllerRoute("DeletePost",
+       "Blog/DeletePost/{id?}",
+       new { controller = "Blog", action = "DeletePost" });
+
     endpoints.MapControllerRoute("Blog",
-       "Blog/{action}/{id?}",
+       "Blog/{id?}",
        new { controller = "Blog", action = "Index" });
 
     endpoints.MapControllerRoute("Default",
