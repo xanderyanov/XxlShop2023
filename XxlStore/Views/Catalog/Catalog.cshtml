@@ -57,7 +57,7 @@
         }
     </div>
     <div class="col-12 col-xl-6 order-2 order-xl-1">
-        <div class="row">Найдено: @Model.PagingInfo.TotalItems !!!!!!!</div>
+        <div class="row">Найдено: @Model.PagingInfo.TotalItems шт.</div>
         <div class="row">
             @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>()) {
                 <partial name="ProductSummary" model="p" />
