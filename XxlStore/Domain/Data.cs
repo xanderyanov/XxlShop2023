@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using XxlStore.Models;
 
 namespace XxlStore;
 
@@ -14,6 +15,10 @@ public class Domain {
     public List<Product> ExistingTovars;
 
     public List<string> Categories;
+
+    public List<Post> ExistingPosts;
+
+    
 }
 
 public static class Data
@@ -25,6 +30,8 @@ public static class Data
     //public static List<string> Levels;
 
     public static IMongoCollection<Product> productsCollection;
+
+    public static IMongoCollection<Post> blogCollection;
 
 
     public static void InitData(IConfiguration Configuration)
@@ -46,6 +53,9 @@ public static class Data
         domain.ExistingTovars = GetAllProducts();
         domain.Categories = domain.ExistingTovars.Select(x => x.CatLev[2]).Distinct().OrderBy(x => x).ToList();
 
+        blogCollection = DB.GetCollection<Post>("blogpost");
+        domain.ExistingPosts = GetAllPosts();
+        
         MainDomain = domain;
     }
 
@@ -53,6 +63,12 @@ public static class Data
     {
         BsonDocument filter = new BsonDocument();
         return productsCollection.Find(filter).ToList();
+    }    
+    
+    private static List<Post> GetAllPosts()
+    {
+        BsonDocument filter = new BsonDocument();
+        return blogCollection.Find(filter).ToList();
     }
 
     public static double TryParseDouble(string src, double Default)
