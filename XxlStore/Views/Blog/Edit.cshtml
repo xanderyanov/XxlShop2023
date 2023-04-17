@@ -59,7 +59,12 @@
                             <form style="display: inline-block;" action="/Blog/DeletePost" method="post" onsubmit="return ConfirmDeleteRu(@post.Title);">
                                 <input id="Id" name="Id" value="@post.Id" type="hidden">
                                 <input class="btn btn-default btn-xs" value="Удалить" type="submit">
-                            </form>
+                            </form>  
+
+                            @*<form style="display: inline-block;" action="/Blog/DeletePost" method="post" onsubmit="return confirm('Do you really want to delete the @post.Title ?');">
+                                <input id="Id" name="Id" value="@post.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Удалить" type="submit">
+                            </form>*@
 
                         </td>
                     </tr>
@@ -72,11 +77,9 @@
 </div>
 
 <script>
-    $(function () {
-        function ConfirmDeleteRu(name) {
-            console.log("ConfirmDeleteRu start");
-            return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
-        }
-    })
+    function ConfirmDeleteRu(name) {
+        console.log("ConfirmDeleteRu start");
+        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+    }
 </script>
 
