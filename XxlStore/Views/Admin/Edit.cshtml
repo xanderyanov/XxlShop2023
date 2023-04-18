@@ -1,29 +1,18 @@
 ﻿@model Post
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "Блог";
 
     DateTime currentDate = DateTime.Now;
-    Console.WriteLine(currentDate);
 }
-
-<script>
-    function DateUpdate() {
-        console.log("start DateUpdate");
-        let dateElem = document.getElementById('CreatedDate').value = "@currentDate";
-    }
-</script>
 
 <div class="wrapper">
     <div class="container-fluid container-xl">
         <div class="row py-2 posts__area">
             <div class="col-12">
-                <h1>Редактирование статьи</h1>
-                <div class="mb-3">
-                    Текущая дата: @currentDate
-                </div>
+                <h1>Добавить статью</h1>
                 <div class="addPost">
-                    <form action="/Blog/CreatePost" method="post">
+                    <form action="/Admin/CreateOrUpdatePost" method="post">
                         <input class="form-control" id="IdAsString" name="IdAsString" type="hidden" value="@Model.IdAsString">
                         <div class="input-group mb-3">
                             <input class="form-control" id="CreatedDate" name="CreatedDate" type="text" aria-describedby="button-addon2" value="@Model.CreatedDate">
@@ -48,4 +37,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function DateUpdate() {
+        console.log("start DateUpdate");
+        let dateElem = document.getElementById('CreatedDate').value = "@currentDate";
+    }
+</script>
+
 
