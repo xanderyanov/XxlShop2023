@@ -13,11 +13,12 @@ namespace XxlStore.Models
     }
 
     [BsonIgnoreExtraElements]
-    public class Post {
+    public class Post : Domain
+    {
 
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        //[BsonId]
+        //[BsonRepresentation(BsonType.ObjectId)]
+        //public ObjectId Id { get; set; }
 
         public string Title { get; set; }
 
@@ -29,7 +30,7 @@ namespace XxlStore.Models
         public Image CoverImage { get; set; } = new();
 
         public DateTime CreatedDate { get; set; }
-        public DateTime PostDate { get; set; }
+        //public DateTime PostDate { get; set; }
 
         public DateTime UpdatedDate { get; set;}
 

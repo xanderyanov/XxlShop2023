@@ -8,23 +8,59 @@ namespace XxlStore.Controllers
 {
     public class BlogController : BaseController
     {
+
+
         public IActionResult Index()
         {
             Domain domain = Data.MainDomain;
 
-            var posts = domain.ExistingPosts.OrderByDescending(x =>x.PostDate).ToList();
+            var posts = domain.ExistingPosts.OrderByDescending(x => x.CreatedDate).ToList();
 
             return View("Index", posts);
         }
 
+        public IActionResult Post(string id)
+        {
+            ObjectId Id = default;
+            try {
+                Id = new ObjectId(id);
+            }
+            catch {
+                return NotFound();
+            }
+
+            Post post = Data.MainDomain.ExistingPosts.Find(x => x.Id == Id);
+
+            return View("Post", post);
+        }
+
         public IActionResult Edit()
         {
-            return View("Edit", Data.MainDomain.ExistingPosts);
+            return View("Edit", Data.MainDomain.ExistingPosts.OrderByDescending(x => x.CreatedDate).ToList());
+        }
+
+        public IActionResult Update(string id)
+        {
+            ObjectId Id = default;
+            try {
+                Id = new ObjectId(id);
+            }
+            catch {
+                return NotFound();
+            }
+
+            Domain domain = Data.MainDomain;
+
+
+            Post post = domain.ExistingPosts.SingleOrDefault(x => x.Id == Id);
+
+            return View("Update", post);
         }
 
         [HttpPost]
         public IActionResult CreatePost(Post post)
         {
+
             if (post.Id == default) {
                 post.Id = ObjectId.GenerateNewId();
             }
@@ -40,13 +76,16 @@ namespace XxlStore.Controllers
             });
 
 
-            if (!Data.MainDomain.ExistingPosts.Any(x => x.Id == post.Id))
-                Data.MainDomain.ExistingPosts.Add(post);
+            if (!Data.MainDomain.ExistingPosts.Any(x => x.Id == post.Id)) { 
+                Data.MainDomain.ExistingPosts.Add(post); } 
+            else {
+                var mPosts = Data.MainDomain.ExistingPosts;
 
-            return RedirectToAction("Index");
+                int index = mPosts.IndexOf(mPosts.Where(x => x.Id == post.Id).FirstOrDefault());
+                mPosts[index] = post;
+            }
 
-            //return Redirect("/Blog");
-
+            return RedirectToAction("Edit");
 
         }
 
@@ -69,11 +108,11 @@ namespace XxlStore.Controllers
                 
                 Domain domain = Data.MainDomain;
 
-                //domain.ExistingPosts.RemoveAll(x => x.Id == postId);    // удаление всех постов с Id == postId // как-то сомнительно
+                domain.ExistingPosts.RemoveAll(x => x.Id == postId);    // удаление всех постов с Id == postId // как-то сомнительно
 
-                var itemToRemove = domain.ExistingPosts.SingleOrDefault(x => x.Id == postId);   //  больно код большой, по сравнению с предыдущим примером
-                if (itemToRemove != null)
-                    domain.ExistingPosts.Remove(itemToRemove);
+                //var itemToRemove = domain.ExistingPosts.SingleOrDefault(x => x.Id == postId);   //  больно код большой, по сравнению с предыдущим примером
+                //if (itemToRemove != null)
+                //    domain.ExistingPosts.Remove(itemToRemove);
 
 
 

@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Блог";
 
-    DateTime currentDate = DateTime.UtcNow;
+    DateTime currentDate = DateTime.Now;
 }
 
 <div class="wrapper">
@@ -14,8 +14,8 @@
                 <div class="addPost">
                     <form action="/Blog/CreatePost" method="post">
                         <div class="mb-3">
-                            <label class="form-label" for="PostDate">Date</label>
-                            <input class="form-control" id="PostDate" name="PostDate" type="text" value="@currentDate.ToString("dd.mm.yyyy hh:mm:ss")">
+                            <label class="form-label" for="CreatedDate">Date</label>
+                            <input class="form-control" id="CreatedDate" name="CreatedDate" type="text" value="@currentDate">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Title">Title</label>
@@ -52,20 +52,20 @@
 
                 @foreach (var post in Model) {
                     <tr>
-                        <td>@post.PostDate</td>
+                        <td>@post.CreatedDate</td>
                         <td>@post.Title</td>
                         <td>@post.Author</td>
+                        <td>
+                            <form style="display: inline-block;" action="/Blog/Update" method="post" onsubmit="return">
+                                <input id="Id" name="Id" value="@post.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Редактировать" type="submit">
+                            </form>  
+                        </td>
                         <td>
                             <form style="display: inline-block;" action="/Blog/DeletePost" method="post" onsubmit="return ConfirmDeleteRu(@post.Title);">
                                 <input id="Id" name="Id" value="@post.Id" type="hidden">
                                 <input class="btn btn-default btn-xs" value="Удалить" type="submit">
                             </form>  
-
-                            @*<form style="display: inline-block;" action="/Blog/DeletePost" method="post" onsubmit="return confirm('Do you really want to delete the @post.Title ?');">
-                                <input id="Id" name="Id" value="@post.Id" type="hidden">
-                                <input class="btn btn-default btn-xs" value="Удалить" type="submit">
-                            </form>*@
-
                         </td>
                     </tr>
                 }

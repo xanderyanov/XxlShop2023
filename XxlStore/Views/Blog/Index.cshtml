@@ -17,9 +17,9 @@
                         <div class="col p-4 d-flex flex-column position-static">
                             <strong class="d-inline-block mb-2 text-primary">@post.Title</strong>
                             <h3 class="mb-0">@post.Author</h3>
-                            <div class="mb-1 text-muted">@post.PostDate</div>
+                            <div class="mb-1 text-muted">@post.CreatedDate</div>
                             <p class="card-text mb-auto">@post.Text</p>
-                            <a href="#" class="stretched-link">Continue reading</a>
+                            <a href="/Blog/Post/@post.IdAsString" class="stretched-link">Continue reading</a>
                         </div>
                     </div>
                 </div>
