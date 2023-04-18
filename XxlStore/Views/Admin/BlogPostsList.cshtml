@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Управление постами";
 }
-
+<script>
+    function ConfirmDeleteRu(name) {
+        console.log("ConfirmDeleteRu start");
+        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+    }
+</script>
 
 <div class="wrapper">
     <div class="container-fluid container-xl">
@@ -44,9 +49,4 @@
     </div>
 </div>
 
-<script>
-    function ConfirmDeleteRu(name) {
-        console.log("ConfirmDeleteRu start");
-        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
-    }
-</script>
+
