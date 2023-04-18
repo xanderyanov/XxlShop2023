@@ -1,0 +1,39 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+
+<div class="wrapper">
+
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+
+            <h1>Регистрация</h1>
+
+            <form asp-asp-controller="Account" asp-action="Register">
+                <div asp-asp-validation-summary="All" class="text-danger text-center"></div>
+                <div class="form-group">
+                    <input asp-for="Name" class="form-control" placeholder="Имя" type="text" value="" />
+                </div>
+                <div class="form-group">
+                    <input autocomplete="new-password" asp-for="Password" class="form-control" placeholder="Пароль" type="password" value="" />
+                </div>
+                <div class="form-group">
+                    <input autocomplete="new-password" asp-for="PasswordConfirm" class="form-control" placeholder="Подтвердите пароль" type="password" value="" />
+                </div>
+                <div>
+                    <h2>
+                        <a asp-controller="Account" asp-action="Login" target="_blank" href="">Вход</a>
+                    </h2>
+                </div>
+
+                <button class="btn btn-success" type="submit">Отправить</button>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
