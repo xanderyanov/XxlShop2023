@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using XxlStore.Models;
+using XxlStore.Infrastructure;
 
 namespace XxlStore.Controllers
 {
@@ -132,17 +133,22 @@ namespace XxlStore.Controllers
 
             if (user.Id == default) {
                 user.Id = ObjectId.GenerateNewId();
-            }
+            } 
+
             BsonDocument filter = new BsonDocument() {
-                {
-                    "_id", user.Id
-                }
+                { "_id", user.Id }
             };
 
-            Data.usersCollection.ReplaceOne(filter, user, new ReplaceOptions()
-            {
-                IsUpsert = true
-            });
+            if (user.Password != null) {
+                user.Password = HashPasswordHelper.HashPassword(user.Password);
+                Data.usersCollection.ReplaceOne(filter, user, new ReplaceOptions()
+                {
+                    IsUpsert = true
+                });
+            } else { 
+                var updateSettings = new BsonDocument("$set", new BsonDocument { { "Name", user.Name }, { "Email", user.Email } });
+                Data.usersCollection.UpdateOne(filter, updateSettings);
+            }
 
 
             if (!domain.ExistingUsers.Any(x => x.Id == user.Id)) {
