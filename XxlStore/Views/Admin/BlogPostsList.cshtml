@@ -35,7 +35,7 @@
                             </form>
                         </td>
                         <td>
-                            <form style="display: inline-block;" action="/Admin/DeletePost" method="post" onsubmit="return ConfirmDeleteRu(@post.Title);">
+                            <form style="display: inline-block;" action="/Admin/DeletePost" method="post" onsubmit="return ConfirmDeleteRu('@post.Title');">
                                 <input id="Id" name="Id" value="@post.Id" type="hidden">
                                 <input class="btn btn-default btn-xs" value="Удалить" type="submit">
                             </form>

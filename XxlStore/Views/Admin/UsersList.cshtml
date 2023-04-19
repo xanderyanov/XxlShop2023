@@ -1,0 +1,54 @@
+﻿@model List<User>
+
+@{
+    ViewData["Title"] = "Список пользователей сайта";
+}
+
+<script>
+    function ConfirmDeleteRu(name) {
+        console.log("ConfirmDeleteRu start");
+        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+    }
+</script>
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Роль</th>
+                        <th>E-Mail</th>
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+
+                @foreach (var user in Model) {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td></td>
+                        <td>@user.Email</td>
+                        <td>
+                            <form style="display: inline-block;" action="/Admin/UpdateUser" method="post" onsubmit="return">
+                                <input id="Id" name="Id" value="@user.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Редактировать" type="submit">
+                            </form>
+                        </td>
+                        <td>
+                            <form style="display: inline-block;" action="/Admin/DeleteUser" method="post" onsubmit="return ConfirmDeleteRu('@user.Name');">
+                                <input id="Id" name="Id" value="@user.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Удалить" type="submit">
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <a class="btn btn-primary" href="/Admin/AddUser">Добавить пользователя</a>
+        </div>
+    </div>
+</div>
+
+

@@ -7,10 +7,9 @@ namespace XxlStore.Controllers
 {
     public class AdminController : BaseController
     {
+        Domain domain = Data.MainDomain;
         public IActionResult Index()
         {
-            Domain domain = Data.MainDomain;
-
             var posts = domain.ExistingPosts.OrderByDescending(x => x.CreatedDate).ToList();
 
             return View("BlogPostsList", posts);
@@ -33,9 +32,6 @@ namespace XxlStore.Controllers
             catch {
                 return NotFound();
             }
-
-            Domain domain = Data.MainDomain;
-
 
             Post post = domain.ExistingPosts.SingleOrDefault(x => x.Id == Id);
 
@@ -61,10 +57,10 @@ namespace XxlStore.Controllers
             });
 
 
-            if (!Data.MainDomain.ExistingPosts.Any(x => x.Id == post.Id)) {
-                Data.MainDomain.ExistingPosts.Add(post);
+            if (!domain.ExistingPosts.Any(x => x.Id == post.Id)) {
+                domain.ExistingPosts.Add(post);
             } else {
-                var mPosts = Data.MainDomain.ExistingPosts;
+                var mPosts = domain.ExistingPosts;
 
                 int index = mPosts.IndexOf(mPosts.Where(x => x.Id == post.Id).FirstOrDefault());
                 mPosts[index] = post;
@@ -100,5 +96,84 @@ namespace XxlStore.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult UsersList()
+        {
+            var users = domain.ExistingUsers.OrderBy(x => x.Id).ToList();
+
+            return View("UsersList", users);
+        }
+
+        public IActionResult AddUser()
+        {
+            User user = new User();
+
+            return View("UserEdit", user);
+        }
+
+        public IActionResult UpdateUser(string id)
+        {
+            ObjectId Id = default;
+            try {
+                Id = new ObjectId(id);
+            }
+            catch {
+                return NotFound();
+            }
+
+            User user = domain.ExistingUsers.SingleOrDefault(x => x.Id == Id);
+
+            return View("UserEdit", user);
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrUpdateUser(User user)
+        {
+
+            if (user.Id == default) {
+                user.Id = ObjectId.GenerateNewId();
+            }
+            BsonDocument filter = new BsonDocument() {
+                {
+                    "_id", user.Id
+                }
+            };
+
+            Data.usersCollection.ReplaceOne(filter, user, new ReplaceOptions()
+            {
+                IsUpsert = true
+            });
+
+
+            if (!domain.ExistingUsers.Any(x => x.Id == user.Id)) {
+                domain.ExistingUsers.Add(user);
+            } else {
+                var mUsers = domain.ExistingUsers;
+
+                int index = mUsers.IndexOf(mUsers.Where(x => x.Id == user.Id).FirstOrDefault());
+                mUsers[index] = user;
+            }
+
+            return RedirectToAction("UsersList");
+        }
+
+        public IActionResult DeleteUser(string Id)
+        {
+            if (ObjectId.TryParse(Id, out var userId)) {
+
+                BsonDocument filter = new BsonDocument() {
+                    {
+                        "_id", userId
+                    }
+                };
+
+                Data.usersCollection.DeleteOne(filter);
+
+                domain.ExistingUsers.RemoveAll(x => x.Id == userId);
+
+            }
+            return RedirectToAction("UsersList");
+        }
+
     }
 }
