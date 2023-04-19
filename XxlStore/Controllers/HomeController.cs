@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
 using System.Text;
 using XxlStore;
@@ -10,6 +11,7 @@ namespace XxlStore.Controllers
     {
         public int PageSize = 16;
 
+        //[Authorize]
         public IActionResult Index(int productPage = 1)
         {
             IEnumerable<Product> Products = Data.MainDomain.ExistingTovars;
