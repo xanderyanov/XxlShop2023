@@ -146,7 +146,8 @@ namespace XxlStore.Controllers
                     IsUpsert = true
                 });
             } else { 
-                var updateSettings = new BsonDocument("$set", new BsonDocument { { "Name", user.Name }, { "Email", user.Email } });
+
+                var updateSettings = new BsonDocument("$set", new BsonDocument { { "Name", user.Name.ToLower() }, { "Email", user.Email } });
                 Data.usersCollection.UpdateOne(filter, updateSettings);
             }
 

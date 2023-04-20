@@ -7,6 +7,7 @@ using System;
 using XxlStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using XxlStore.Infrastructure;
+using XxlStore.Domain;
 
 var Prov = CodePagesEncodingProvider.Instance;
 Encoding.RegisterProvider(Prov);
@@ -98,6 +99,8 @@ app.UseAuthentication();   // добавление middleware аутентификации
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseMiddleware<XxlStore.Domain.AuthCorrectionMiddleware>();
 
 app.UseAuthorization();   // добавление middleware авторизации 
 

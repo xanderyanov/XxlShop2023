@@ -23,15 +23,12 @@ namespace XxlStore.Controllers
         [HttpPost]
         public async Task<IActionResult> IndexAsync(LoginViewModel user)
         {
-            User existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name == user.Name && x.Password == HashPasswordHelper.HashPassword(user.Password));
+            User existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == HashPasswordHelper.HashPassword(user.Password));
 
             if (existUser == null ) { return RedirectToAction("Index"); }
 
-
-
-
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.Name.ToLower()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, existUser.Role.Name)
             };
             
@@ -41,15 +38,15 @@ namespace XxlStore.Controllers
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Super");
+            return RedirectToAction("AccessConfirmed");
         }
 
-        public IActionResult Super()
+        public IActionResult AccessConfirmed()
         {
             return View();
         }
 
-        public IActionResult Accessdenied()
+        public IActionResult AccessDenied()
         {
             return View();
         }

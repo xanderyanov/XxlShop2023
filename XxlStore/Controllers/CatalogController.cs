@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using Amazon.Runtime.Internal;
 using XxlStore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace XxlStore.Controllers
 {
@@ -14,6 +15,7 @@ namespace XxlStore.Controllers
     {
         public int PageSize = 16;
 
+        [Authorize]
         public IActionResult Index(string id, int productPage = 1)
         {
             Domain domain = Data.MainDomain;
