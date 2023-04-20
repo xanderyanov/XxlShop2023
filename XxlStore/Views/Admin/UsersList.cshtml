@@ -28,7 +28,7 @@
                 @foreach (var user in Model) {
                     <tr>
                         <td>@user.Name</td>
-                        <td></td>
+                        <td>@user.Role.Name</td>
                         <td>@user.Email</td>
                         <td>
                             <form style="display: inline-block;" action="/Admin/UpdateUser" method="post" onsubmit="return">

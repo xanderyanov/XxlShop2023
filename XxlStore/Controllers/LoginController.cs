@@ -6,6 +6,7 @@ using XxlStore.Infrastructure;
 using XxlStore.Models;
 using XxlStore;
 using XxlStore.Models.ViewModels;
+using System;
 
 namespace XxlStore.Controllers
 {
@@ -27,7 +28,12 @@ namespace XxlStore.Controllers
             if (existUser == null ) { return RedirectToAction("Index"); }
 
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
+
+
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, existUser.Role.Name)
+            };
             
             // создаем объект ClaimsIdentity
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
@@ -40,7 +46,11 @@ namespace XxlStore.Controllers
 
         public IActionResult Super()
         {
-            
+            return View();
+        }
+
+        public IActionResult Accessdenied()
+        {
             return View();
         }
 

@@ -19,7 +19,11 @@ Data.InitData(builder.Configuration);
 
 // аутентификация с помощью куки
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => options.LoginPath = "/login");
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/Login/Accessdenied";
+    });
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -80,30 +84,15 @@ app.UseAuthentication();   // добавление middleware аутентификации
 //    return Results.Redirect(returnUrl ?? "/");
 //});
 
-app.MapGet("/logout", async (HttpContext context) =>
-{
-    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    return Results.Redirect("/Login/Index");
-});
+//app.MapGet("/logout", async (HttpContext context) =>
+//{
+//    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+//    return Results.Redirect("/Login/Index");
+//});
 
 //app.MapGet("/", () => "Hello World!");
 
 //app.Map("/", [Authorize] () => $"Hello World!");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.UseStaticFiles();

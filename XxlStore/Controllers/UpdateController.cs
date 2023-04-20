@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using XxlStore.Models;
 
 namespace XxlStore.Controllers
 {
+    
     public class UpdateController : Controller
     {
 
@@ -13,6 +16,8 @@ namespace XxlStore.Controllers
             SingleFileModel model = new SingleFileModel();
             return View("Index", model);
         }
+
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             SingleFileModel model = new SingleFileModel();
