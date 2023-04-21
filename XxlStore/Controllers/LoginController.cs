@@ -10,7 +10,7 @@ using System;
 
 namespace XxlStore.Controllers
 {
-    public class LoginController : BaseController
+    public class LoginController : XxlController
     {
         Domain domain = Data.MainDomain;
 

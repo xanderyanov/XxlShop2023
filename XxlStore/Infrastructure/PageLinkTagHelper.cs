@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 using Amazon.Runtime.Internal;
 using System.Data;
-using static XxlStore.BaseController;
+using static XxlStore.XxlController;
 using System.Reflection;
 using System.Text;
 

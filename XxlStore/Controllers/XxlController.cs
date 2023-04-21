@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using XxlStore.Models;
 
 namespace XxlStore
 {
@@ -11,9 +12,11 @@ namespace XxlStore
         public string MetaKeywords { get; set; }
         public string MetaDescription { get; set; }
 
+        public User User { get; private set; }
+
     }
 
-    public class BaseController : Controller
+    public class XxlController : Controller
     {
         public BaseBucket Bucket = new BaseBucket();
 

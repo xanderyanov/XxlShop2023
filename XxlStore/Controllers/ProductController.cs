@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace XxlStore.Controllers
 {
-    public class ProductController : BaseController
+    public class ProductController : XxlController
     {
         public IActionResult Index(string id)
         {

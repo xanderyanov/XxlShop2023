@@ -30,7 +30,7 @@ namespace XxlStore.Middleware
                 var userDB = DbUsers.SingleOrDefault(x => x.Name.ToLower() == UserName.ToLower());
 
                 
-                //////////////////////////////////////////////
+                ////////////////////////////////////////////// вывод активного пользователя и его ролей в консоль
                 StringBuilder SB = new StringBuilder();
                 for (int i = 0; i < userDB.Roles.Count; i++) { 
                         SB.Append(userDB.Roles[i]);

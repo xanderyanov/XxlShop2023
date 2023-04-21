@@ -6,7 +6,7 @@ using XxlStore.Infrastructure;
 
 namespace XxlStore.Controllers
 {
-    public class AdminController : BaseController
+    public class AdminController : XxlController
     {
         Domain domain = Data.MainDomain;
         public IActionResult Index()

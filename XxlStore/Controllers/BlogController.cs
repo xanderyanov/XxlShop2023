@@ -7,7 +7,7 @@ using XxlStore.Models;
 
 namespace XxlStore.Controllers
 {
-    public class BlogController : BaseController
+    public class BlogController : XxlController
     {
 
         [Authorize]

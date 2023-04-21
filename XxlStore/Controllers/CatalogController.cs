@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace XxlStore.Controllers
 {
-    public class CatalogController : BaseController
+    public class CatalogController : XxlController
     {
         public int PageSize = 16;
 

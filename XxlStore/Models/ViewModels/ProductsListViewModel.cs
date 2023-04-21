@@ -1,4 +1,4 @@
-﻿using static XxlStore.BaseController;
+﻿using static XxlStore.XxlController;
 
 namespace XxlStore.Models.ViewModels
 {

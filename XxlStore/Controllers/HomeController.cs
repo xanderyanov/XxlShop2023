@@ -7,7 +7,7 @@ using XxlStore.Models.ViewModels;
 
 namespace XxlStore.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : XxlController
     {
         public int PageSize = 16;
 
