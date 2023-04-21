@@ -76,7 +76,7 @@ public static class Data
         return blogCollection.Find(filter).ToList();
     }
 
-    private static List<User> GetAllUsers()
+    public static List<User> GetAllUsers()
     {
         BsonDocument filter = new BsonDocument();
         return usersCollection.Find(filter).ToList();

@@ -29,7 +29,7 @@ namespace XxlStore.Controllers
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Name.ToLower()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, existUser.Role.Name)
+                //new Claim(ClaimsIdentity.DefaultRoleClaimType, existUser.Role.Name)
             };
             
             // создаем объект ClaimsIdentity

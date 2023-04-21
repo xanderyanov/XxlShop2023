@@ -10,7 +10,7 @@ namespace XxlStore.Controllers
     public class BlogController : BaseController
     {
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize]
         public IActionResult Index()
         {
             Domain domain = Data.MainDomain;

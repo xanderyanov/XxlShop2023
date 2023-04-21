@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Data;
 
 namespace XxlStore.Models
 {
@@ -9,7 +10,8 @@ namespace XxlStore.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public List<string> Roles { get; set; } = new List<string> { "user" };
+
 
         public Role Role { get; set; } = new Role("user");
 

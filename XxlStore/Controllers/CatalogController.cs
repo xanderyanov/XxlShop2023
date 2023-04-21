@@ -15,7 +15,6 @@ namespace XxlStore.Controllers
     {
         public int PageSize = 16;
 
-        [Authorize]
         public IActionResult Index(string id, int productPage = 1)
         {
             Domain domain = Data.MainDomain;
@@ -60,14 +59,14 @@ namespace XxlStore.Controllers
             }
 
             Products = productSource
-                .Where(p => id == null || p.BrandName == id)
+                .Where(p => Bucket.SelectedCategory == null || p.BrandName == Bucket.SelectedCategory)
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize);
 
             var ProductsForFiltersElements = productSource
-                .Where(p => id == null || p.BrandName == id);
+                .Where(p => Bucket.SelectedCategory == null || p.BrandName == Bucket.SelectedCategory);
 
-            Console.WriteLine("productSource.Count - " + ProductsForFiltersElements.Count());
+            //Console.WriteLine("productSource.Count - " + ProductsForFiltersElements.Count());
             
             Filter.CollectPageFilterValues(ProductsForFiltersElements);
 
@@ -79,9 +78,9 @@ namespace XxlStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = id == null ? productSource.Count() : productSource.Where(e => e.BrandName == id).Count()
+                    TotalItems = Bucket.SelectedCategory == null ? productSource.Count() : productSource.Where(e => e.BrandName == Bucket.SelectedCategory).Count()
                 },
-                CurrentCategory = id
+                CurrentCategory = Bucket.SelectedCategory
             });
         }
     }
