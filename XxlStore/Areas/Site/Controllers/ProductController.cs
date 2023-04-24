@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Site.Controllers
 {
+    [Area("Site")]
     public class ProductController : XxlController
     {
         public IActionResult Index(string id)
         {
             ObjectId Id = default;
-            try {
+            try
+            {
                 Id = new ObjectId(id);
             }
-            catch {
+            catch
+            {
                 return NotFound();
             }
 

@@ -4,8 +4,9 @@ using MongoDB.Driver;
 using XxlStore.Models;
 using XxlStore.Infrastructure;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminController : XxlController
     {
         Domain domain = Data.MainDomain;
@@ -20,17 +21,19 @@ namespace XxlStore.Controllers
         {
             Post model = new Post();
             model.CreatedDate = DateTime.Now;
-            
+
             return View("Edit", model);
         }
 
         public IActionResult Update(string id)
         {
             ObjectId Id = default;
-            try {
+            try
+            {
                 Id = new ObjectId(id);
             }
-            catch {
+            catch
+            {
                 return NotFound();
             }
 
@@ -43,7 +46,8 @@ namespace XxlStore.Controllers
         public IActionResult CreateOrUpdatePost(Post post)
         {
 
-            if (post.Id == default) {
+            if (post.Id == default)
+            {
                 post.Id = ObjectId.GenerateNewId();
             }
             BsonDocument filter = new BsonDocument() {
@@ -58,9 +62,12 @@ namespace XxlStore.Controllers
             });
 
 
-            if (!domain.ExistingPosts.Any(x => x.Id == post.Id)) {
+            if (!domain.ExistingPosts.Any(x => x.Id == post.Id))
+            {
                 domain.ExistingPosts.Add(post);
-            } else {
+            }
+            else
+            {
                 var mPosts = domain.ExistingPosts;
 
                 int index = mPosts.IndexOf(mPosts.Where(x => x.Id == post.Id).FirstOrDefault());
@@ -75,7 +82,8 @@ namespace XxlStore.Controllers
         {
             //передавать на удаление надо Id того типа, который хранится в базе. Мы передаем string, а в базе ObjectId. По этому делаем проверку ObjectId.TryParse(Id, out var postId)
 
-            if (ObjectId.TryParse(Id, out var postId)) {
+            if (ObjectId.TryParse(Id, out var postId))
+            {
 
                 BsonDocument filter = new BsonDocument() {
                     {
@@ -115,10 +123,12 @@ namespace XxlStore.Controllers
         public IActionResult UpdateUser(string id)
         {
             ObjectId Id = default;
-            try {
+            try
+            {
                 Id = new ObjectId(id);
             }
-            catch {
+            catch
+            {
                 return NotFound();
             }
 
@@ -131,30 +141,37 @@ namespace XxlStore.Controllers
         public IActionResult CreateOrUpdateUser(User user)
         {
 
-            if (user.Id == default) {
+            if (user.Id == default)
+            {
                 user.Id = ObjectId.GenerateNewId();
-            } 
+            }
 
             BsonDocument filter = new BsonDocument() {
                 { "_id", user.Id }
             };
 
-            if (user.Password != null) {
+            if (user.Password != null)
+            {
                 user.Password = HashPasswordHelper.HashPassword(user.Password);
                 Data.usersCollection.ReplaceOne(filter, user, new ReplaceOptions()
                 {
                     IsUpsert = true
                 });
-            } else { 
+            }
+            else
+            {
 
                 var updateSettings = new BsonDocument("$set", new BsonDocument { { "Name", user.Name.ToLower() }, { "Email", user.Email } });
                 Data.usersCollection.UpdateOne(filter, updateSettings);
             }
 
 
-            if (!domain.ExistingUsers.Any(x => x.Id == user.Id)) {
+            if (!domain.ExistingUsers.Any(x => x.Id == user.Id))
+            {
                 domain.ExistingUsers.Add(user);
-            } else {
+            }
+            else
+            {
                 var mUsers = domain.ExistingUsers;
 
                 int index = mUsers.IndexOf(mUsers.Where(x => x.Id == user.Id).FirstOrDefault());
@@ -166,7 +183,8 @@ namespace XxlStore.Controllers
 
         public IActionResult DeleteUser(string Id)
         {
-            if (ObjectId.TryParse(Id, out var userId)) {
+            if (ObjectId.TryParse(Id, out var userId))
+            {
 
                 BsonDocument filter = new BsonDocument() {
                     {

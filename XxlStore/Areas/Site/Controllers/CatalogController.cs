@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
 using System.Text;
-using XxlStore;
 using XxlStore.Models.ViewModels;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -9,8 +8,9 @@ using Amazon.Runtime.Internal;
 using XxlStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Site.Controllers
 {
+    [Area("Site")]
     public class CatalogController : XxlController
     {
         public int PageSize = 16;
@@ -40,15 +40,19 @@ namespace XxlStore.Controllers
             /// Value: { "Male", "Uni" }
             /// </summary>
 
-            if(Request.Query != null) { 
-                foreach (var pair in Request.Query) {
+            if (Request.Query != null)
+            {
+                foreach (var pair in Request.Query)
+                {
                     string filterKey = pair.Key;
-                    if (filterKey.StartsWith("f_")) {
+                    if (filterKey.StartsWith("f_"))
+                    {
                         string propName = filterKey[2..];
                         var values = pair.Value;
 
                         PropertyInfo PI = typeof(Product).GetProperty(propName); //проверяем, есть ли в Product свойство с именем propName, которое мы получили. И если есть, то код ниже выполняется.
-                        if (PI != null) {
+                        if (PI != null)
+                        {
                             List<string> decodedValues = values.Select(x => Base64Fix.Obratno(x)).ToList(); //получаем список свойств по-русски, декодировав наш полученный values
                             viewSettings.CheckedFilters.Add(propName, decodedValues); // подготовка к следующему заапросу с сохранением информации в viewSettings
                             List<Product> thisStepProds = productSource.Where(x => decodedValues.Contains(PI.GetValue(x) as string)).ToList(); //фильтруем 
@@ -67,7 +71,7 @@ namespace XxlStore.Controllers
                 .Where(p => Bucket.SelectedCategory == null || p.BrandName == Bucket.SelectedCategory);
 
             //Console.WriteLine("productSource.Count - " + ProductsForFiltersElements.Count());
-            
+
             Filter.CollectPageFilterValues(ProductsForFiltersElements);
 
             return View("Catalog", new ProductsListViewModel

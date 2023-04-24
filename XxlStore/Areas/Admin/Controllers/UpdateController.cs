@@ -4,14 +4,15 @@ using Microsoft.Extensions.Configuration;
 using System.Data;
 using XxlStore.Models;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Admin.Controllers
 {
-    
+    [Area("Admin")]
     public class UpdateController : Controller
     {
 
         [HttpPost]
-        public IActionResult BaseUpdate() {
+        public IActionResult BaseUpdate()
+        {
             Console.WriteLine("Start Base Update");
             SingleFileModel model = new SingleFileModel();
             return View("Index", model);
@@ -27,7 +28,8 @@ namespace XxlStore.Controllers
         [HttpPost]
         public IActionResult Upload(SingleFileModel model)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 model.IsResponse = true;
 
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/files");
@@ -49,7 +51,8 @@ namespace XxlStore.Controllers
 
                 string fileNameWithPath = Path.Combine(path, fileName);
 
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create)) {
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
                     model.File.CopyTo(stream);
                 }
                 model.IsSuccess = true;
@@ -71,7 +74,8 @@ namespace XxlStore.Controllers
 
         public static bool IsFileValid(IFormFile file)
         {
-            using (var reader = new BinaryReader(file.OpenReadStream())) {
+            using (var reader = new BinaryReader(file.OpenReadStream()))
+            {
                 var signatures = _fileSignatures.Values.SelectMany(x => x).ToList();  // flatten all signatures to single list
                 var headerBytes = reader.ReadBytes(_fileSignatures.Max(m => m.Value.Max(n => n.Length)));
                 bool result = signatures.Any(signature => headerBytes.Take(signature.Length).SequenceEqual(signature));

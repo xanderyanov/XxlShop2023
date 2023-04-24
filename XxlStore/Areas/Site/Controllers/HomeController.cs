@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
 using System.Text;
-using XxlStore;
 using XxlStore.Models.ViewModels;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Site.Controllers
 {
+    [Area("Site")]
     public class HomeController : XxlController
     {
         public int PageSize = 16;
@@ -28,7 +28,7 @@ namespace XxlStore.Controllers
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
                     TotalItems = filteredProducts.Count()
-                }                
+                }
             });
 
         }

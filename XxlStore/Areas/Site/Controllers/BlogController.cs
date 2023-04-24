@@ -5,12 +5,12 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using XxlStore.Models;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Site.Controllers
 {
+    [Area("Site")]
     public class BlogController : XxlController
     {
 
-        [Authorize]
         public IActionResult Index()
         {
             Domain domain = Data.MainDomain;
@@ -23,10 +23,12 @@ namespace XxlStore.Controllers
         public IActionResult Post(string id)
         {
             ObjectId Id = default;
-            try {
+            try
+            {
                 Id = new ObjectId(id);
             }
-            catch {
+            catch
+            {
                 return NotFound();
             }
 

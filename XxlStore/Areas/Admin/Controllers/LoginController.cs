@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using XxlStore.Infrastructure;
 using XxlStore.Models;
-using XxlStore;
 using XxlStore.Models.ViewModels;
 using System;
 
-namespace XxlStore.Controllers
+namespace XxlStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class LoginController : XxlController
     {
         Domain domain = Data.MainDomain;
@@ -25,16 +25,16 @@ namespace XxlStore.Controllers
         {
             User existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == HashPasswordHelper.HashPassword(user.Password));
 
-            if (existUser == null ) { return RedirectToAction("Index"); }
+            if (existUser == null) { return RedirectToAction("Index"); }
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Name.ToLower()),
                 //new Claim(ClaimsIdentity.DefaultRoleClaimType, existUser.Role.Name)
             };
-            
+
             // создаем объект ClaimsIdentity
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-            
+
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
@@ -54,7 +54,7 @@ namespace XxlStore.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            
+
             return View("Index");
         }
     }
