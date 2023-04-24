@@ -1,0 +1,43 @@
+﻿@{
+    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>XxlStore</title>
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/lib/jquery/jquery.js" asp-append-version="true"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="bg-dark text-white p-2">
+            <span class="navbar-brand ml-2">SPORTS STORE</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <header class="d-flex justify-content-center py-3">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
+                        <li class="nav-item"><a href="/Catalog" class="nav-link">Каталог</a></li>
+
+                        <li class="nav-item"><a href="/Update" class="nav-link">Update</a></li>
+
+                        <li class="nav-item"><a href="/Blog" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/Admin" class="nav-link">Admin</a></li>
+                        <li class="nav-item"><a href="/Admin/UsersList" class="nav-link">Users</a></li>
+                        <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="/Login/Logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </header>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

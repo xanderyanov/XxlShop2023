@@ -1,0 +1,39 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Добавление или редактирование пользователя";
+}
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <div class="col-12">
+                <h1>Действие с пользователем</h1>
+                <div class="addUser">
+                    <form action="/Admin/CreateOrUpdateUser" method="post">
+                        <input class="form-control" id="IdAsString" name="IdAsString" type="hidden" value="@Model.IdAsString" />
+                        <div class="mb-3">
+                            <label class="form-label" for="Name">Name</label>
+                            <input class="form-control" id="Name" name="Name" type="text" value="@Model.Name" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Email">Email</label>
+                            <input class="form-control" id="Email" name="Email" type="email" value="@Model.Email" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Password">Password</label>
+                            <input class="form-control" id="Password" name="Password" type="password" value="" />
+                        </div>
+@*                        <div class="mb-3">
+                            <label class="form-label" for="Role">Role</label>
+                            <input class="form-control" id="Role" name="Role" type="text" value="" />
+                        </div>*@
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

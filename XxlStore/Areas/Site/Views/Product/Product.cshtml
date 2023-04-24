@@ -1,0 +1,51 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-3 productPage__area">
+            <div class="col-3">
+                <div class="productPage__mainImg">
+                    <img class="d-block w-100" src="https://mirchasov64.ru/uploads/aaaclock/@Model.ImgFileName" alt="@Model.BrandName" />
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>@Model.Name</h1>
+
+                @if(Model.Discount > 0){
+                    <span>Скидка @Model.Discount %</span>
+                    <div class="catalog__itemPrice_old">Цена: @Model.Price руб.</div>
+                }
+                <h3>Цена: @Model.DiscountPrice руб.</h3>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Характеристика</th>
+                            <th scope="col">Значение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.BrandName != ""){<tr><th scope="row">Бренд</th><td>@Model.BrandName</td></tr>}
+                        @if(Model.FlagNew){<tr><th scope="row">Новинка</th><td>Да</td></tr>}
+                        @if(Model.FlagSaleLeader){<tr><th scope="row">Лидер продаж</th><td>Да</td></tr>}
+                        @*@if(Model.TotalCount > 0){<tr><th scope="row">Доступно</th><td>@Model.TotalCount шт.</td></tr>}*@
+                        @if(Model.Wristlet != ""){<tr><th scope="row">Браслет</th><td>@Model.Wristlet</td></tr>}
+                        @if(Model.WaterProtection != ""){<tr><th scope="row">Водозащита</th><td>@Model.WaterProtection</td></tr>}
+                        @if(Model.CaseMaterial != ""){<tr><th scope="row">Материал корпуса</th><td>@Model.CaseMaterial</td></tr>}
+                        @if(Model.CaseForm != ""){<tr><th scope="row">Форма корпуса</th><td>@Model.CaseForm</td></tr>}
+                        @if(Model.CaseSize != ""){<tr><th scope="row">Размер корпуса</th><td>@Model.CaseSize</td></tr>}
+                        @if(Model.Glass != ""){<tr><th scope="row">Стекло</th><td>@Model.Glass</td></tr>}
+                        @if(Model.Gender != ""){<tr><th scope="row">Пол</th><td>@Model.Gender</td></tr>}
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

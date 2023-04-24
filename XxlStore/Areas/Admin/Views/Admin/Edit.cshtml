@@ -1,0 +1,48 @@
+﻿@model Post
+
+@{
+    ViewData["Title"] = "Блог";
+
+    DateTime currentDate = DateTime.Now;
+}
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <div class="col-12">
+                <h1>Добавить статью</h1>
+                <div class="addPost">
+                    <form action="/Admin/CreateOrUpdatePost" method="post">
+                        <input class="form-control" id="IdAsString" name="IdAsString" type="hidden" value="@Model.IdAsString">
+                        <div class="input-group mb-3">
+                            <input class="form-control" id="CreatedDate" name="CreatedDate" type="text" aria-describedby="button-addon2" value="@Model.CreatedDate">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="DateUpdate();">Обновить дату на текущую</button>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Title">Title</label>
+                            <input class="form-control" id="Title" name="Title" type="text" value="@Model.Title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Text">Text</label>
+                            <textarea class="form-control" id="Text" name="Text" type="text" value="">@Model.Text</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Author">Author</label>
+                            <input class="form-control" id="Author" name="Author" type="text" value="@Model.Author">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function DateUpdate() {
+        console.log("start DateUpdate");
+        let dateElem = document.getElementById('CreatedDate').value = "@currentDate";
+    }
+</script>
+
+
