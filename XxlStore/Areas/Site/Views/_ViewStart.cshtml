@@ -12,7 +12,7 @@
 @functions {
     public void NavMenu()
     {
-        ViewBag.SelectedCategory = Context.Request.RouteValues["id"];
+        string selectedCategory = Bucket.SelectedCategory;
         
         <div class="col-12 d-grid mb-1">
             <a class="btn btn-block btn-outline-secondary" href="/">Главная страница</a>
@@ -21,7 +21,7 @@
         @foreach (string category in Data.MainDomain.Categories) {
             string url = "/Catalog/" + category;
             <div class="col-12 d-grid mb-1">
-                <a class='btn btn-block  @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")' href="@url">@category</a>
+                <a class='btn btn-block  @(category == selectedCategory? "btn-primary": "btn-outline-secondary")' href="@url">@category</a>
             </div>
         }
     }

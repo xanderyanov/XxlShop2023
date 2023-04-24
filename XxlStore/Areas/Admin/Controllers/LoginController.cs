@@ -6,6 +6,7 @@ using XxlStore.Infrastructure;
 using XxlStore.Models;
 using XxlStore.Models.ViewModels;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace XxlStore.Areas.Admin.Controllers
 {
@@ -43,6 +44,11 @@ namespace XxlStore.Areas.Admin.Controllers
 
         public IActionResult AccessConfirmed()
         {
+            //User = httpContext.Items[nameof(TUser)] as TUser;
+
+            //Bucket.UserName = id;
+            //Bucket.UserName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+
             return View();
         }
 

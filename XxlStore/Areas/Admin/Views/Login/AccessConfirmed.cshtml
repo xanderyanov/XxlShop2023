@@ -1,14 +1,14 @@
-﻿@model string
-
-@{
+﻿@{
     ViewData["Title"] = "Добавление или редактирование пользователя";
+
+    string name = Bucket.UserName;
 }
 
 <div class="wrapper">
     <div class="container-fluid container-xl">
         <div class="row py-2 posts__area">
             <div class="col-12">
-                <h1>Вы авторизованы под пользователем @Model</h1>
+                <h1>Вы авторизованы под пользователем @name</h1>
                 
             </div>
         </div>

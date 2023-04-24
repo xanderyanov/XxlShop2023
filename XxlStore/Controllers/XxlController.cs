@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
 using XxlStore.Models;
 
 namespace XxlStore
@@ -13,16 +14,20 @@ namespace XxlStore
         public string MetaDescription { get; set; }
 
         public User User { get; private set; }
+        public string UserName { get; set; }
 
     }
 
     public class XxlController : Controller
     {
-        public BaseBucket Bucket = new BaseBucket();
+        public BaseBucket Bucket;
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            Bucket = new BaseBucket();
+            Bucket.UserName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             ViewData["Bucket"] = Bucket;
+
             base.OnActionExecuting(context);
         }
 
