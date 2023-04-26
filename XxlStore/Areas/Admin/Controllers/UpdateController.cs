@@ -7,7 +7,7 @@ using XxlStore.Models;
 namespace XxlStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UpdateController : Controller
+    public class UpdateController : XxlController
     {
 
         [HttpPost]

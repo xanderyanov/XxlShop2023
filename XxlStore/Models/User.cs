@@ -15,6 +15,8 @@ namespace XxlStore.Models
 
         public Role Role { get; set; } = new Role("user");
 
+        [BsonIgnore]
+        public bool IsAdmin => Roles.Contains("admin");
     }
 
     public class Role

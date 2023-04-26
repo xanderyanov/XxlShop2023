@@ -13,7 +13,7 @@ namespace XxlStore
         public string MetaKeywords { get; set; }
         public string MetaDescription { get; set; }
 
-        public User User { get; private set; }
+        public User User { get; set; }
         public string UserName { get; set; }
 
     }
@@ -26,6 +26,7 @@ namespace XxlStore
         {
             Bucket = new BaseBucket();
             Bucket.UserName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            Bucket.User = Data.MainDomain.ExistingUsers.FirstOrDefault(x => x.Name == Bucket.UserName);
             ViewData["Bucket"] = Bucket;
 
             base.OnActionExecuting(context);

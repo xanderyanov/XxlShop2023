@@ -61,7 +61,7 @@ namespace XxlStore.Areas.Admin.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }
