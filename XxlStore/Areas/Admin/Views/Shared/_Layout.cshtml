@@ -1,6 +1,7 @@
 ﻿@{
-    string userName = Bucket?.User?.Name;
-    List<string> userRoles = Bucket?.User?.Roles;
+    var user = Bucket?.User;
+    string userName = user?.Name;
+    List<string> userRoles = user?.Roles;
 
 }
 
