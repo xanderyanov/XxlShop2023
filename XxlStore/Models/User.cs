@@ -3,7 +3,7 @@ using System.Data;
 
 namespace XxlStore.Models
 {
-    public class User : Domain
+    public class TUser : Domain
     {
 
         public string Name { get; set; }

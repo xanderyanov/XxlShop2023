@@ -13,7 +13,7 @@ namespace XxlStore
         public string MetaKeywords { get; set; }
         public string MetaDescription { get; set; }
 
-        public User User { get; set; }
+        public TUser User { get; set; }
         public string UserName { get; set; }
 
     }

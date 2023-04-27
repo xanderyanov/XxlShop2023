@@ -18,7 +18,7 @@ public class Domain {
 
     public List<Post> ExistingPosts;
 
-    public List<User> ExistingUsers;
+    public List<TUser> ExistingUsers;
 }
 
 public static class Data
@@ -33,7 +33,7 @@ public static class Data
 
     public static IMongoCollection<Post> blogCollection;
 
-    public static IMongoCollection<User> usersCollection;
+    public static IMongoCollection<TUser> usersCollection;
 
 
     public static void InitData(IConfiguration Configuration)
@@ -58,7 +58,7 @@ public static class Data
         blogCollection = DB.GetCollection<Post>("blogpost");
         domain.ExistingPosts = GetAllPosts();
 
-        usersCollection = DB.GetCollection<User>("users");
+        usersCollection = DB.GetCollection<TUser>("users");
         domain.ExistingUsers = GetAllUsers();
 
         MainDomain = domain;
@@ -76,7 +76,7 @@ public static class Data
         return blogCollection.Find(filter).ToList();
     }
 
-    public static List<User> GetAllUsers()
+    public static List<TUser> GetAllUsers()
     {
         BsonDocument filter = new BsonDocument();
         return usersCollection.Find(filter).ToList();

@@ -115,7 +115,7 @@ namespace XxlStore.Areas.Admin.Controllers
 
         public IActionResult AddUser()
         {
-            User user = new User();
+            TUser user = new TUser();
 
             return View("UserEdit", user);
         }
@@ -132,13 +132,13 @@ namespace XxlStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            User user = domain.ExistingUsers.SingleOrDefault(x => x.Id == Id);
+            TUser user = domain.ExistingUsers.SingleOrDefault(x => x.Id == Id);
 
             return View("UserEdit", user);
         }
 
         [HttpPost]
-        public IActionResult CreateOrUpdateUser(User user)
+        public IActionResult CreateOrUpdateUser(TUser user)
         {
 
             if (user.Id == default)

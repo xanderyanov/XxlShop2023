@@ -41,8 +41,8 @@ namespace XxlStore.Middleware
                 await Console.Out.WriteLineAsync("UserName: " + UserName + "; Roles: " + SB);
                 //////////////////////////////////////////////
 
-                if (userDB is User user) {
-                    context.Items[nameof(User)] = user;
+                if (userDB is TUser user) {
+                    context.Items[nameof(TUser)] = user;
                     foreach (var role in userDB.Roles) claims.Add(new Claim(ClaimTypes.Role, role));
                 }
             }

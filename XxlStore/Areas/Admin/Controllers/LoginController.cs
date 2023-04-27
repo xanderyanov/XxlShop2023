@@ -24,7 +24,7 @@ namespace XxlStore.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> IndexAsync(LoginViewModel user)
         {
-            User existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == HashPasswordHelper.HashPassword(user.Password));
+            TUser existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == HashPasswordHelper.HashPassword(user.Password));
 
             if (existUser == null) { return RedirectToAction("Index"); }
 
