@@ -25,12 +25,12 @@
                             <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
                         } else {
                             <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
-                            @if (user.IsAdmin) {
+                            @if (user.IsActive && user.IsAdmin) {
                                 <li class="nav-item"><a href="/Update" class="nav-link">Update</a></li>
                             }
                             
                             <li class="nav-item"><a href="/Admin" class="nav-link">Blog Edit</a></li>
-                            @if (user.IsSuperAdmin) {
+                            @if (user.IsActive && user.IsSuperAdmin) {
                                 <li class="nav-item"><a href="/Admin/UsersList" class="nav-link">Users</a></li>
                             }
                             

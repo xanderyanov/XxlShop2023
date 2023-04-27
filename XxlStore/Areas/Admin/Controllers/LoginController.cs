@@ -7,6 +7,8 @@ using XxlStore.Models;
 using XxlStore.Models.ViewModels;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace XxlStore.Areas.Admin.Controllers
 {
@@ -26,7 +28,7 @@ namespace XxlStore.Areas.Admin.Controllers
         {
             TUser existUser = domain.ExistingUsers.SingleOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == HashPasswordHelper.HashPassword(user.Password));
 
-            if (existUser == null) { return RedirectToAction("Index"); }
+            if (existUser == null || !existUser.IsActive) { return RedirectToAction("Index"); }
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Name.ToLower()),
@@ -42,6 +44,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return RedirectToAction("AccessConfirmed");
         }
 
+        [Authorize]
         public IActionResult AccessConfirmed()
         {
             return View();
