@@ -12,6 +12,8 @@ namespace XxlStore.Models
 
         public List<string> Roles { get; set; } = new List<string> { "user" };
 
+        public bool IsActive { get; set; } = true;
+
 
         public Role Role { get; set; } = new Role("user");
 

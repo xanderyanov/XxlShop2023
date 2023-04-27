@@ -6,7 +6,7 @@
 
 }
 
-<script>
+@*<script>
     function StartBaseUpdate() {
         $.ajax({
             type: "POST",
@@ -20,7 +20,7 @@
             }
         });
     }
-</script>
+</script>*@
 
 
 <form asp-action="Upload" asp-controller="Update" method="post" enctype="multipart/form-data">
@@ -54,11 +54,11 @@
 
     <div class="row mt-2">
         <div class="col-12">
-            <button type="submit" class="btn btn-success">Upload File</button>
+            <button type="submit" class="btn btn-success">Start Update</button>
         </div>
     </div>
 </form>
 
-<div class="update btn" onclick="StartBaseUpdate()">Обновить</div>
+@*<div class="update btn" onclick="StartBaseUpdate()">Обновить</div>*@
 
 

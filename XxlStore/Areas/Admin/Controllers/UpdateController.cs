@@ -19,7 +19,6 @@ namespace XxlStore.Areas.Admin.Controllers
             return View("Index", model);
         }
 
-        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             SingleFileModel model = new SingleFileModel();
