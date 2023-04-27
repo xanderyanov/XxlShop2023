@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddRazorPages();
+
 Data.InitData(builder.Configuration);
 
 // аутентификация с помощью куки
@@ -120,5 +122,7 @@ static void Configure(IApplicationBuilder app)
     //});
 
 }
+
+app.MapRazorPages();
 
 app.Run();

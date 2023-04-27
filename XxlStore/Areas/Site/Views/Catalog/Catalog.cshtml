@@ -96,6 +96,26 @@
             </ul>
         }
 
+        @if (Filter.AllMechanismType != null) {
+            var checkedValues = new List<string>();
+            bool keyExists = viewSettings.CheckedFilters.ContainsKey("MechanismType");
+            if (keyExists == true) { checkedValues = viewSettings.CheckedFilters["MechanismType"]; }
+            <h3>Тип механизма:</h3>
+            <ul class="mb-2">
+                @foreach (var i in Filter.AllMechanismType) {
+                    if (i == "") continue;
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@("MechanismType=" + Base64Fix.Tuda(i))" data-val="filter">
+                            <label class="form-check-label" for="">
+                                @i
+                            </label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+
         @if (Filter.AllCaseForm != null) {
             var checkedValues = new List<string>();
             bool keyExists = viewSettings.CheckedFilters.ContainsKey("CaseForm");
