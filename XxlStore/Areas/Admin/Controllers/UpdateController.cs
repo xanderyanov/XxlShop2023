@@ -7,6 +7,7 @@ using XxlStore.Models;
 namespace XxlStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "xander, admin")]
     public class UpdateController : XxlController
     {
 

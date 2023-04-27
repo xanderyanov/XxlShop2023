@@ -3,13 +3,18 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using XxlStore.Models;
 using XxlStore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace XxlStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class AdminController : XxlController
     {
         Domain domain = Data.MainDomain;
+
+        [Authorize(Roles = "xander, admin, user")]
         public IActionResult Index()
         {
             var posts = domain.ExistingPosts.OrderByDescending(x => x.CreatedDate).ToList();
@@ -17,6 +22,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return View("BlogPostsList", posts);
         }
 
+        [Authorize(Roles = "xander, admin, user")]
         public IActionResult Create()
         {
             Post model = new Post();
@@ -25,6 +31,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return View("Edit", model);
         }
 
+        [Authorize(Roles = "xander, admin, user")]
         public IActionResult Update(string id)
         {
             ObjectId Id = default;
@@ -43,6 +50,7 @@ namespace XxlStore.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "xander, admin, user")]
         public IActionResult CreateOrUpdatePost(Post post)
         {
 
@@ -78,6 +86,7 @@ namespace XxlStore.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "xander, admin")]
         public IActionResult DeletePost(string Id)
         {
             //передавать на удаление надо Id того типа, который хранится в базе. Мы передаем string, а в базе ObjectId. По этому делаем проверку ObjectId.TryParse(Id, out var postId)
@@ -106,6 +115,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "xander")]
         public IActionResult UsersList()
         {
             var users = domain.ExistingUsers.OrderBy(x => x.Id).ToList();
@@ -113,6 +123,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return View("UsersList", users);
         }
 
+        [Authorize(Roles = "xander")]
         public IActionResult AddUser()
         {
             TUser user = new TUser();
@@ -120,6 +131,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return View("UserEdit", user);
         }
 
+        [Authorize(Roles = "xander")]
         public IActionResult UpdateUser(string id)
         {
             ObjectId Id = default;
@@ -138,6 +150,7 @@ namespace XxlStore.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "xander")]
         public IActionResult CreateOrUpdateUser(TUser user)
         {
 
@@ -181,6 +194,7 @@ namespace XxlStore.Areas.Admin.Controllers
             return RedirectToAction("UsersList");
         }
 
+        [Authorize(Roles = "xander")]
         public IActionResult DeleteUser(string Id)
         {
             if (ObjectId.TryParse(Id, out var userId))
