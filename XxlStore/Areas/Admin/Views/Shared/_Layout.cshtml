@@ -1,8 +1,6 @@
 ﻿@{
     var user = Bucket?.User;
     string userName = user?.Name;
-    List<string> userRoles = user?.Roles;
-
 }
 
 <!DOCTYPE html>
@@ -23,16 +21,16 @@
                 <header class="d-flex justify-content-center py-3">
                     <ul class="nav nav-pills">
                         
-                        @if (string.IsNullOrEmpty(userName)) {
+                        @if (user == null) {
                             <li class="nav-item"><a href="/Login" class="nav-link">Login</a></li>
                         } else {
                             <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
-                            @if (userRoles.Contains("admin")) {
+                            @if (user.IsAdmin) {
                                 <li class="nav-item"><a href="/Update" class="nav-link">Update</a></li>
                             }
                             
                             <li class="nav-item"><a href="/Admin" class="nav-link">Blog Edit</a></li>
-                            @if (userRoles.Contains("admin")) {
+                            @if (user.IsSuperAdmin) {
                                 <li class="nav-item"><a href="/Admin/UsersList" class="nav-link">Users</a></li>
                             }
                             
