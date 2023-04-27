@@ -4,11 +4,9 @@
     public class Filter
     {
         public static List<string> AllGenders { get; private set; }
-        
         public static List<string> AllMechanismType { get; private set; }
         public static List<string> AllCaseForm { get; private set; }
         public static List<string> AllCaseMaterial { get; private set; }
-        
         public static List<string> AllGlass { get; private set; }
 
 
@@ -36,6 +34,7 @@
         public static void Clear()
         {
             AllGenders = null;
+            AllMechanismType = null;
             AllCaseForm = null;
             AllCaseMaterial = null;
             AllGlass = null;

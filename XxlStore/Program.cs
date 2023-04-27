@@ -13,6 +13,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 Data.InitData(builder.Configuration);
 
 // аутентификация с помощью куки
@@ -41,6 +44,7 @@ Configure(app);
 static void Configure(IApplicationBuilder app)
 {
     app.UseStaticFiles();
+    app.UseSession();
 
     app.MapWhen(
     context => Settings.AdminHostNameConstraint.Match(context),
