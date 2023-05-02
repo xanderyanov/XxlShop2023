@@ -29,5 +29,12 @@ namespace XxlStore.Pages
             }
             return RedirectToPage(new { returnUrl = returnUrl });
         }
+
+        public IActionResult OnPostRemove(string id, string returnUrl)
+        {
+            Cart.RemoveLine(Cart.Lines.First(cl =>
+            cl.Product.IdAsString == id).Product);
+            return RedirectToPage(new { returnUrl = returnUrl });
+        }
     }
 }
