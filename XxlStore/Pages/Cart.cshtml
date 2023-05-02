@@ -1,13 +1,13 @@
 ﻿@page
 @model CartModel
-<h2>Your cart</h2>
+<h2>Ваша корзина</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Quantity</th>
-            <th>Item</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
+            <th>Количество</th>
+            <th>Наименование товара</th>
+            <th class="text-right">Цена</th>
+            <th class="text-right">Цена общая</th>
             <th></th>
         </tr>
     </thead>
@@ -27,7 +27,7 @@
                         <input type="hidden" name="returnUrl"
                                value="@Model?.ReturnUrl" />
                         <button type="submit" class="btn btn-sm btn-danger">
-                            Remove
+                            Удалить
                         </button>
                     </form>
                 </td>
@@ -36,7 +36,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3" class="text-right">Total:</td>
+            <td colspan="3" class="text-right">Всего::</td>
             <td class="text-right">
                 @Model?.Cart?.ComputeTotalValue().ToString("c")
             </td>
@@ -44,5 +44,5 @@
     </tfoot>
 </table>
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model?.ReturnUrl">Continue shopping</a>
+    <a class="btn btn-primary" href="@Model?.ReturnUrl">Прподолжить покупки</a>
 </div>
