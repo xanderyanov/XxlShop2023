@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using XxlStore.Areas.Admin.Controllers;
 using XxlStore.Areas.Site.Controllers;
+using XxlStore.Models;
 
 var Prov = CodePagesEncodingProvider.Instance;
 Encoding.RegisterProvider(Prov);
@@ -15,6 +16,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+builder.Services.AddScoped(sp => SessionCart.GetCart(sp));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 Data.InitData(builder.Configuration);
 
@@ -26,6 +29,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Login/Accessdenied";
     });
 builder.Services.AddAuthorization();
+
+
 
 var app = builder.Build();
 
@@ -45,6 +50,7 @@ static void Configure(IApplicationBuilder app)
 {
     app.UseStaticFiles();
     app.UseSession();
+
 
     app.MapWhen(
     context => Settings.AdminHostNameConstraint.Match(context),
