@@ -9,11 +9,19 @@
     <title>XxlStore</title>
     <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <script src="/lib/jquery/jquery.js" asp-append-version="true"></script>
+    <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="layout">
         <div class="bg-dark text-white p-2">
-            <span class="navbar-brand ml-2">SPORTS STORE</span>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col navbar-brand">Мир часов</div>
+                    <div class="col-6 navbar-text text-end">
+                        <vc:cart-summary />
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="container-fluid">
             <div class="row">

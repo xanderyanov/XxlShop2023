@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Shared\" />
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 

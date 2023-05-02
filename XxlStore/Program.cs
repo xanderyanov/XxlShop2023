@@ -16,7 +16,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-builder.Services.AddScoped(sp => SessionCart.GetCart(sp));
+builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 Data.InitData(builder.Configuration);
