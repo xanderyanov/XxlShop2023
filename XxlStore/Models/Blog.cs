@@ -13,7 +13,7 @@ namespace XxlStore
     }
 
     [BsonIgnoreExtraElements]
-    public class Post : Domain
+    public class Post : Father
     {
 
         //[BsonId]

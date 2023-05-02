@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace XxlStore
 {
     [BsonIgnoreExtraElements]  //если какого-то поля нет - не выведет ошибку а проигнорирует
-    public class Product : Domain
+    public class Product : Father
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]

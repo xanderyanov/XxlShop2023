@@ -1,6 +1,6 @@
 ﻿namespace XxlStore.Models
 {
-    public class Cart
+    public class Cart : Father
     {
         public List<CartLine> Lines { get; set; } = new List<CartLine>();
         

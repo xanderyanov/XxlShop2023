@@ -3,7 +3,7 @@ using System.Data;
 
 namespace XxlStore
 {
-    public class TUser : Domain
+    public class TUser : Father
     {
 
         public string Name { get; set; }

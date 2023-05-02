@@ -74,6 +74,12 @@ static void Configure(IApplicationBuilder app)
             ).WithDisplayName("Update");
 
             endpoints.MapControllerRoute(
+                name: "Orders",
+                pattern: "OrderAdmin/{action}/{id?}",
+                defaults: new { area = "Admin", controller = nameof(OrderAdminController)[..^10], action = "Index" }
+            ).WithDisplayName("Orders");
+
+            endpoints.MapControllerRoute(
                 name: "Default",
                 pattern: "{controller}/{action}/{id?}",
                 defaults: new { area = "Admin", controller = nameof(AdminController)[..^10], action = "Index" }

@@ -1,0 +1,58 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "Заказы";
+}
+<script>
+    function ConfirmDeleteRu(name) {
+        console.log("ConfirmDeleteRu start");
+        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+    }
+</script>
+
+<div class="wrapper">
+    <div class="container-fluid container-xl">
+        <div class="row py-2 posts__area">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Дата</th>
+                        <th>Заказчик</th>
+                        <th>Подробности</th>
+                        <th>Удаление</th>
+                    </tr>
+                </thead>
+
+                @foreach (var order in Model) {
+                    <tr>
+                        <td>@order.IdAsString</td>
+                        <td>@order.CreatedDate</td>
+                        <td>@order.Name</td>
+                        <td>
+                            @foreach(var line in order.Lines) {
+                                if (order.Lines.Count() == 0) return;
+
+                                <p>@line.Product.Name</p>
+                            }
+                        </td>
+                        @*<td>
+                            <form style="display: inline-block;" action="/Admin/Update" method="post" onsubmit="return">
+                                <input id="Id" name="Id" value="@order.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Редактировать" type="submit">
+                            </form>
+                        </td>*@
+                        <td>
+                            <form style="display: inline-block;" action="/OrderAdmin/DeleteOrder" method="post" onsubmit="return ConfirmDeleteRu('@order.Name');">
+                                <input id="Id" name="Id" value="@order.Id" type="hidden">
+                                <input class="btn btn-default btn-xs" value="Удалить" type="submit">
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            
+        </div>
+    </div>
+</div>

@@ -14,26 +14,7 @@ namespace XxlStore;
 
 public class Domain {
 
-    [XmlIgnore]
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public ObjectId Id { get; set; }
 
-    [BsonIgnore]
-    public string IdAsString
-    {
-        get
-        {
-            return Id.ToString();
-        }
-        set
-        {
-            if (value == null)
-                Id = ObjectId.Empty;
-            else
-                Id = new ObjectId(value);
-        }
-    }
 
     public List<Product> ExistingTovars;
 
@@ -42,6 +23,8 @@ public class Domain {
     public List<Post> ExistingPosts;
 
     public List<TUser> ExistingUsers;
+    
+    public List<Order> ExistingOrders;
 }
 
 public static class Data
@@ -57,6 +40,8 @@ public static class Data
     public static IMongoCollection<Post> blogCollection;
 
     public static IMongoCollection<TUser> usersCollection;
+    
+    public static IMongoCollection<Order> ordersCollection;
 
 
     public static void InitData(IConfiguration Configuration)
@@ -84,6 +69,9 @@ public static class Data
         usersCollection = DB.GetCollection<TUser>("users");
         domain.ExistingUsers = GetAllUsers();
 
+        ordersCollection = DB.GetCollection<Order>("orders");
+        domain.ExistingOrders = GetAllOrders();
+
         MainDomain = domain;
     }
    
@@ -103,6 +91,12 @@ public static class Data
     {
         BsonDocument filter = new BsonDocument();
         return usersCollection.Find(filter).ToList();
+    }
+
+    public static List<Order> GetAllOrders()
+    {
+        BsonDocument filter = new BsonDocument();
+        return ordersCollection.Find(filter).ToList();
     }
 
     public static double TryParseDouble(string src, double Default)
