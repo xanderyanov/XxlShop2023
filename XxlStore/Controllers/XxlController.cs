@@ -16,6 +16,8 @@ namespace XxlStore
         public TUser User { get; set; }
         public string UserName { get; set; }
 
+        public bool OnlyCatalog { get; set; }
+
     }
 
     public class XxlController : Controller
@@ -27,6 +29,7 @@ namespace XxlStore
             Bucket = new BaseBucket();
             Bucket.UserName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             Bucket.User = Data.MainDomain.ExistingUsers.FirstOrDefault(x => x.Name == Bucket.UserName);
+            Bucket.OnlyCatalog = false;
             ViewData["Bucket"] = Bucket;
 
             base.OnActionExecuting(context);

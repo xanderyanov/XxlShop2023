@@ -3,14 +3,38 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Xml.Serialization;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using XxlStore;
 using XxlStore.Models;
 
 namespace XxlStore;
 
 public class Domain {
+    
+    [XmlIgnore]
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId Id { get; set; }
+
+    [BsonIgnore]
+    public string IdAsString
+    {
+        get
+        {
+            return Id.ToString();
+        }
+        set
+        {
+            if (value == null)
+                Id = ObjectId.Empty;
+            else
+                Id = new ObjectId(value);
+        }
+    }
 
     public List<Product> ExistingTovars;
 
@@ -19,6 +43,8 @@ public class Domain {
     public List<Post> ExistingPosts;
 
     public List<TUser> ExistingUsers;
+
+    public List<Cart> ExistingCarts;  
 }
 
 public static class Data
@@ -34,6 +60,8 @@ public static class Data
     public static IMongoCollection<Post> blogCollection;
 
     public static IMongoCollection<TUser> usersCollection;
+    
+    public static IMongoCollection<Cart> cartsCollection;
 
 
     public static void InitData(IConfiguration Configuration)
@@ -61,6 +89,9 @@ public static class Data
         usersCollection = DB.GetCollection<TUser>("users");
         domain.ExistingUsers = GetAllUsers();
 
+        cartsCollection = DB.GetCollection<Cart>("carts");
+        domain.ExistingCarts = GetAllCarts();
+
         MainDomain = domain;
     }
    
@@ -80,6 +111,12 @@ public static class Data
     {
         BsonDocument filter = new BsonDocument();
         return usersCollection.Find(filter).ToList();
+    }
+
+    public static List<Cart> GetAllCarts()
+    {
+        BsonDocument filter = new BsonDocument();
+        return cartsCollection.Find(filter).ToList();
     }
 
     public static double TryParseDouble(string src, double Default)
