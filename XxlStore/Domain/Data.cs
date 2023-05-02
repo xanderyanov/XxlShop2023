@@ -3,14 +3,37 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Xml.Serialization;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using XxlStore.Models;
 
 namespace XxlStore;
 
 public class Domain {
+
+    [XmlIgnore]
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId Id { get; set; }
+
+    [BsonIgnore]
+    public string IdAsString
+    {
+        get
+        {
+            return Id.ToString();
+        }
+        set
+        {
+            if (value == null)
+                Id = ObjectId.Empty;
+            else
+                Id = new ObjectId(value);
+        }
+    }
 
     public List<Product> ExistingTovars;
 

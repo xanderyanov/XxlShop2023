@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace XxlStore.Models
+namespace XxlStore
 {
     public class Image
     {
