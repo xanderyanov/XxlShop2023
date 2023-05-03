@@ -1,0 +1,35 @@
+﻿@model AutoDictionary<string, List<Product>>
+
+<div class="container-fluid">
+    
+    <div class="row">
+        @foreach(var cat in Model.Keys) {
+            List<Product> productsOfThisBrand = Model[cat];
+            <div class="col-12 brandSection">
+                <div class="row bg-light p-1 brandSection__title">
+                    <div class="col-12"><h3>@cat <small>@productsOfThisBrand.Count() шт.</small></h3></div>
+                    <div class="col-12 brandSection__contentCaption">
+                        <div class="row bg-light p-1">
+                            <div class="col-3 fw-bold">1C код</div>
+                            <div class="col-5 fw-bold">Название модели</div>
+                            <div class="col-2 fw-bold">Доступно</div>
+                            <div class="col-2 fw-bold">Цена</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="brandSection__content row">
+                    <div class="col-12">
+                        @foreach (var prod in productsOfThisBrand) {
+                            <div class="row bg-light p-1">
+                                <div class="col-3">@prod.Code1C</div>
+                                <div class="col-5">@prod.Name</div>
+                                <div class="col-2">@prod.TotalCount</div>
+                                <div class="col-2">@prod.DiscountPrice</div>
+                            </div>
+                        }
+                    </div>
+                </div>    
+            </div>
+        }
+    </div>
+</div>

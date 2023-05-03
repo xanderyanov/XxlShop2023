@@ -9,7 +9,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>ADMIN - @userName</title>
     <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
     <script src="/lib/jquery/jquery.js" asp-append-version="true"></script>
+    <script src="/js/script.js" asp-append-version="true"></script>
 </head>
 <body>
     <div class="layout">
@@ -31,6 +33,7 @@
                             
                             <li class="nav-item"><a href="/Admin" class="nav-link">Blog Edit</a></li>
                             <li class="nav-item"><a href="/OrderAdmin" class="nav-link">Заказы</a></li>
+                            <li class="nav-item"><a href="/Stock" class="nav-link">Склад</a></li>
                             @if (user.IsActive && user.IsSuperAdmin) {
                                 <li class="nav-item"><a href="/Admin/UsersList" class="nav-link">Users</a></li>
                             }

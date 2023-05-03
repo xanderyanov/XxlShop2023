@@ -1,0 +1,25 @@
+.brandSection {
+  position: relative;
+}
+
+.brandSection__title {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.brandSection__contentCaption {
+  display: none;
+}
+
+.brandSection__content {
+  display: none;
+}
+
+.brandSection__content_open {
+  display: flex;
+}
+
+small {
+  font-size: 12px;
+}
