@@ -28,6 +28,7 @@ namespace XxlStore
         public int OR_Balance { get; set; }
         public int PZ_Balance { get; set; }
         public int TA_Balance { get; set; }
+        public int FO_Balance { get; set; }
         public string Battery10 { get; set; }
         public string Bluetooth { get; set; }
         public string Barometer { get; set; }

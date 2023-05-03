@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc;
-@implements XxlStore.Views.XxlViewHelper
+@using static XxlStore.XxlController;
+@implements XxlStore.Views.IXxlViewHelper
 
 @{
     Layout = "_Layout";
@@ -24,6 +25,58 @@
                 <a class='btn btn-block  @(category == selectedCategory? "btn-primary": "btn-outline-secondary")' href="@url">@category</a>
             </div>
         }
+    }
+
+    public void FilterUl(List<string> filterName, string filterData, ViewSettingsClass viewSettings)
+    {
+        var checkedValues = new List<string>();
+        bool keyExists = viewSettings.CheckedFilters.ContainsKey(filterData);
+        if (keyExists == true) { checkedValues = viewSettings.CheckedFilters[filterData]; }
+
+        <ul class="mb-2">
+            @foreach (var i in filterName) {
+                if (i == "") continue;
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@(filterData + "=" + Base64Fix.Tuda(i))" data-val="filter">
+                        <label class="form-check-label" for="">
+                            @i
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    public void GroupenFilter(ViewSettingsClass viewSettings)
+    {
+        @if (Filter.AllGenders != null) {
+            <h3>Пол:</h3>
+            FilterUl(Filter.AllGenders, "Gender", viewSettings);
+        }
+
+        @if (Filter.AllMechanismType != null) {
+            <h3>Тип механизма:</h3>
+            FilterUl(Filter.AllMechanismType, "MechanismType", viewSettings);
+        }
+
+        @if (Filter.AllCaseForm != null) {
+            <h3>Форма корпуса:</h3>
+            FilterUl(Filter.AllCaseForm, "CaseForm", viewSettings);
+        }
+
+        @if (Filter.AllCaseMaterial != null) {
+            <h3>Материал корпуса:</h3>
+            FilterUl(Filter.AllCaseMaterial, "CaseMaterial", viewSettings);
+        }
+
+        @if (Filter.AllGlass != null) {
+            <h3>Стекло:</h3>
+            FilterUl(Filter.AllGlass, "Glass", viewSettings);
+        }
+
+        <div class="btn btn-primary JS_Filters_run">Показать результаты</div>
+    
     }
 
 }

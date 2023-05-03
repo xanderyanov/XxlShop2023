@@ -27,7 +27,7 @@ namespace XxlStore.Areas.Site.Controllers
             Bucket.SelectedCategory = id;
             Bucket.Title = $"Часы {id} в магазине Мир Часов XXL";
 
-            IEnumerable<Product> Products = domain.ExistingTovars;
+            IEnumerable<Product> Products;
 
             IEnumerable<Product> productSource = domain.ExistingTovars;
 

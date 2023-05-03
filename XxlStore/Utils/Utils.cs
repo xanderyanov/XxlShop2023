@@ -51,5 +51,21 @@ namespace XxlStore
         }
             
     }
+
+    public class AutoDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
+    {
+        public new TValue this[TKey index]
+        {
+            get
+            {
+                if (!TryGetValue(index, out TValue val)) {
+                    val = new TValue();
+                    Add(index, val);
+                }
+                return val;
+            }
+            set { base[index] = value; }
+        }
+    }
 }
 

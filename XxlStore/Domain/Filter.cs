@@ -1,5 +1,9 @@
 ﻿namespace XxlStore
 {
+    public class GroupenFilter
+    { 
+ 
+    }
 
     public class Filter
     {

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc;
-@implements XxlStore.Views.XxlViewHelper
+
 
 @{
     Layout = "_Layout";
@@ -9,21 +9,3 @@
     ViewData["ViewStart"] = this;
 }
 
-@functions {
-    public void NavMenu()
-    {
-        ViewBag.SelectedCategory = Context.Request.RouteValues["id"];
-        
-        <div class="col-12 d-grid mb-1">
-            <a class="btn btn-block btn-outline-secondary" href="/">Главная страница</a>
-        </div>
-
-        @foreach (string category in Data.MainDomain.Categories) {
-            string url = "/Catalog/" + category;
-            <div class="col-12 d-grid mb-1">
-                <a class='btn btn-block  @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")' href="@url">@category</a>
-            </div>
-        }
-    }
-
-}
