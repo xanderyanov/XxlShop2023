@@ -1,5 +1,17 @@
 ﻿@model AutoDictionary<string, List<Product>>
 
+
+@{
+    ViewData["Title"] = "Управление товарами";
+}
+
+<script>
+    function ConfirmDeleteRu(name) {
+        console.log("ConfirmDeleteRu start");
+        return confirm("Вы уверены, что хотите удалить объект " + name + "?\nОперация необратима.");
+    }
+</script>
+
 <div class="container-fluid">
     
     <div class="row">
@@ -12,8 +24,10 @@
                         <div class="row bg-light p-1">
                             <div class="col-3 fw-bold">1C код</div>
                             <div class="col-5 fw-bold">Название модели</div>
-                            <div class="col-2 fw-bold">Доступно</div>
-                            <div class="col-2 fw-bold">Цена</div>
+                            <div class="col-1 fw-bold">Доступно</div>
+                            <div class="col-1 fw-bold">Цена</div>
+                            <div class="col-1 fw-bold">Редактирование</div>
+                            <div class="col-1 fw-bold">Удаление</div>
                         </div>
                     </div>
                 </div>
@@ -23,8 +37,20 @@
                             <div class="row bg-light p-1">
                                 <div class="col-3">@prod.Code1C</div>
                                 <div class="col-5">@prod.Name</div>
-                                <div class="col-2">@prod.TotalCount</div>
-                                <div class="col-2">@prod.DiscountPrice</div>
+                                <div class="col-1">@prod.TotalCount</div>
+                                <div class="col-1">@prod.DiscountPrice</div>
+                                <div class="col-1">
+                                    <form style="display: inline-block;" action="/Stock/Update" method="post" onsubmit="return">
+                                        <input id="IdAsString" name="IdAsString" value="@prod.IdAsString" type="hidden">
+                                        <input class="btn btn-default btn-xs" value="Редактировать" type="submit">
+                                    </form>
+                                </div>                                
+                                <div class="col-1">
+                                    <form style="display: inline-block;" action="/Stock/DeleteProduct" method="post" onsubmit="return ConfirmDeleteRu('@prod.Name');">
+                                        <input id="Id" name="Id" value="@prod.Id" type="hidden">
+                                        <input class="btn btn-default btn-xs" value="Удалить" type="submit">
+                                    </form>
+                                </div>
                             </div>
                         }
                     </div>
