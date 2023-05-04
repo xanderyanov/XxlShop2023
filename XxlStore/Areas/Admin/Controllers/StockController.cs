@@ -61,6 +61,8 @@ namespace XxlStore.Areas.Admin.Controllers
 
             var mTovars = domain.ExistingTovars;
             int index = mTovars.IndexOf(mTovars.Where(x => x.Id == product.Id).FirstOrDefault());
+            
+            //тут мы обновляем каждое поле, которое изменено в редакторе и сохраняем в память. (аналог UpdateOne, т.е. мы не меняем товар а меняем его свойства внутри)
             mTovars[index].DiscountPrice = product.DiscountPrice;
 
 
