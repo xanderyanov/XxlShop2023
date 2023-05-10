@@ -81,7 +81,7 @@ namespace XxlStore.Areas.Admin.Controllers
 
                 Domain domain = Data.MainDomain;
 
-                domain.ExistingTovars.RemoveAll(x => x.Id == productId);    
+                domain.ExistingTovars.RemoveAll(x => x.Id == productId);
             }
             return RedirectToAction("Index");
         }
