@@ -7,6 +7,7 @@ using System.Reflection;
 using Amazon.Runtime.Internal;
 using XxlStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Amazon.Runtime.Internal.Transform;
 
 namespace XxlStore.Areas.Site.Controllers
 {
@@ -53,9 +54,16 @@ namespace XxlStore.Areas.Site.Controllers
                         PropertyInfo PI = typeof(Product).GetProperty(propName); //проверяем, есть ли в Product свойство с именем propName, которое мы получили. И если есть, то код ниже выполняется.
                         if (PI != null)
                         {
-                            List<string> decodedValues = values.Select(x => Base64Fix.Obratno(x)).ToList(); //получаем список свойств по-русски, декодировав наш полученный values
-                            viewSettings.CheckedFilters.Add(propName, decodedValues); // подготовка к следующему заапросу с сохранением информации в viewSettings
-                            List<Product> thisStepProds = productSource.Where(x => decodedValues.Contains(PI.GetValue(x) as string)).ToList(); //фильтруем 
+                            List<Product> thisStepProds;
+
+                            if (PI.PropertyType == typeof(bool)) {
+                                viewSettings.CheckedAllBoolFilters.Add(propName);
+                                thisStepProds = productSource.Where(x => (bool)PI.GetValue(x)).ToList();
+                            } else { 
+                                List<string> decodedValues = values.Select(x => Base64Fix.Obratno(x)).ToList(); //получаем список свойств по-русски, декодировав наш полученный values
+                                viewSettings.CheckedFilters.Add(propName, decodedValues); // подготовка к следующему заапросу с сохранением информации в viewSettings
+                                thisStepProds = productSource.Where(x => decodedValues.Contains(PI.GetValue(x) as string)).ToList(); //фильтруем 
+                            }
                             productSource = thisStepProds;
                         }
                     }

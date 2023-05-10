@@ -33,23 +33,51 @@
         bool keyExists = viewSettings.CheckedFilters.ContainsKey(filterData);
         if (keyExists == true) { checkedValues = viewSettings.CheckedFilters[filterData]; }
 
-        <ul class="mb-2">
+        <div class="mb-2">
             @foreach (var i in filterName) {
                 if (i == "") continue;
-                <li>
-                    <div class="form-check">
-                        <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@(filterData + "=" + Base64Fix.Tuda(i))" data-val="filter">
-                        <label class="form-check-label" for="">
-                            @i
-                        </label>
-                    </div>
-                </li>
+                <div class="form-check">
+                    <input class="form-check-input myFilter" type="checkbox" @(checkedValues.Contains(i) ? "checked=\"checked\"" : "") value="" id="@i" data-id="@i" data-filter="@(filterData + "=" + Base64Fix.Tuda(i))" data-val="filter">
+                    <label class="form-check-label" for="">
+                        @i
+                    </label>
+                </div>
             }
-        </ul>
+        </div>
+    }
+
+    public void FilterOneCheckbox(bool filterName, string filterData, ViewSettingsClass viewSettings, string labelText)
+    {
+        bool checkedBool = false;
+        bool keyExists = viewSettings.CheckedAllBoolFilters.Contains(filterData);
+        if (keyExists == true) { checkedBool = true; }
+        <div class="form-check">
+            <input class="form-check-input myFilter" type="checkbox" @(checkedBool ? "checked" : "") value="" id="@filterData" data-id="@filterData" data-filter="@(filterData + "=true")" data-val="filter" >
+            <label class="form-check-label" for="">
+                @labelText
+            </label>
+        </div>
     }
 
     public void GroupenFilter(ViewSettingsClass viewSettings)
     {
+
+
+        <h3>Новинка:</h3>
+        FilterOneCheckbox(Filter.FlagNew, "FlagNew", viewSettings, "Новинка");
+
+        <h3>Склады:</h3>
+        <div class="mb-2">
+            @{
+                FilterOneCheckbox(Filter.OnSkladHM, "OnSkladHM", viewSettings, "Хеппи-Молл");
+                FilterOneCheckbox(Filter.OnSkladGL, "OnSkladGL", viewSettings, "Глобус");
+                FilterOneCheckbox(Filter.OnSkladLZ, "OnSkladLZ", viewSettings, "Лазурный");
+                FilterOneCheckbox(Filter.OnSkladOR, "OnSkladOR", viewSettings, "Оранжевый");
+                FilterOneCheckbox(Filter.OnSkladPZ, "OnSkladPZ", viewSettings, "Пассаж");
+                FilterOneCheckbox(Filter.OnSkladTA, "OnSkladTA", viewSettings, "Тау-Галерея");
+            }
+        </div>
+
         @if (Filter.AllGenders != null) {
             <h3>Пол:</h3>
             FilterUl(Filter.AllGenders, "Gender", viewSettings);

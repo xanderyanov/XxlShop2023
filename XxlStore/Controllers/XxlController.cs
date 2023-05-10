@@ -39,6 +39,7 @@ namespace XxlStore
             public string InexpensivePrice { get; set; }
 
             public Dictionary<string, List<string>> CheckedFilters { get; set; } = new();
+            public List<string> CheckedAllBoolFilters { get; set; } = new();
 
         }
     }

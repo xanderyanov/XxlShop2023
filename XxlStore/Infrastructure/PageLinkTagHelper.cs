@@ -55,6 +55,9 @@ namespace XxlStore.Infrastructure
                             SB.Append('&').Append("f_").Append(pair.Key).Append('=').Append(Base64Fix.Tuda(value.ToString()));
                         }
                     }
+                    foreach (var pair in viewSettings.CheckedAllBoolFilters) {
+                        SB.Append('&').Append("f_").Append(pair).Append('=').Append("true");
+                    }
                 }
 
                 IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);

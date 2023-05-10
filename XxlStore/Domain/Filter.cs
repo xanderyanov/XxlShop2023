@@ -12,7 +12,13 @@
         public static List<string> AllCaseForm { get; private set; }
         public static List<string> AllCaseMaterial { get; private set; }
         public static List<string> AllGlass { get; private set; }
-
+        public static bool FlagNew { get; private set; }
+        public static bool OnSkladHM { get; private set; }
+        public static bool OnSkladGL { get; private set; }
+        public static bool OnSkladLZ { get; private set; }
+        public static bool OnSkladOR { get; private set; }
+        public static bool OnSkladPZ { get; private set; }
+        public static bool OnSkladTA { get; private set; }
 
         public static void CollectGlobalFilterValues()
         {

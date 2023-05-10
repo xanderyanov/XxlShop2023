@@ -29,6 +29,17 @@ namespace XxlStore
         public int PZ_Balance { get; set; }
         public int TA_Balance { get; set; }
         public int FO_Balance { get; set; }
+        
+        [BsonIgnore] public bool InStock => TotalCount > 0;
+        [BsonIgnore] public bool OnSkladHM => HM_Balance > 0;
+        [BsonIgnore] public bool OnSkladGL => GL_Balance > 0;
+        [BsonIgnore] public bool OnSkladLZ => LZ_Balance > 0;
+        [BsonIgnore] public bool OnSkladOR => OR_Balance > 0;
+        [BsonIgnore] public bool OnSkladPZ => PZ_Balance > 0;
+        [BsonIgnore] public bool OnSkladTA => TA_Balance > 0;
+        [BsonIgnore] public bool ForOrder => FO_Balance > 0;
+
+
         public string Battery10 { get; set; }
         public string Bluetooth { get; set; }
         public string Barometer { get; set; }
@@ -68,5 +79,7 @@ namespace XxlStore
         public string Chronograph { get; set; }
         public string ClockFace { get; set; }
         public string Pedometer { get; set; }
+
+
     }
 }
