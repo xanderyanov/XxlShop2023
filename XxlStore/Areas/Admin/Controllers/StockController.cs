@@ -57,13 +57,9 @@ namespace XxlStore.Areas.Admin.Controllers
             var updateSettings = new BsonDocument("$set", new BsonDocument { { "Name", product.Name }, { "DiscountPrice", product.DiscountPrice } });
             Data.productsCollection.UpdateOne(filter, updateSettings);
 
-
-
-            var mTovars = domain.ExistingTovars;
-            int index = mTovars.IndexOf(mTovars.Where(x => x.Id == product.Id).FirstOrDefault());
-            
             //тут мы обновляем каждое поле, которое изменено в редакторе и сохраняем в память. (аналог UpdateOne, т.е. мы не меняем товар а меняем его свойства внутри)
-            mTovars[index].DiscountPrice = product.DiscountPrice;
+            int index = domain.ExistingTovars.IndexOf(domain.ExistingTovars.Where(x => x.Id == product.Id).FirstOrDefault());
+            domain.ExistingTovars[index].DiscountPrice = product.DiscountPrice;
 
 
             return RedirectToAction("Index");

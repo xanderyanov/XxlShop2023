@@ -16,9 +16,9 @@
             <tr>
                 <td class="text-center">@line.Quantity</td>
                 <td class="text-left">@line.Product.Name</td>
-                <td class="text-right">@line.Product.Price.ToString("c")</td>
+                <td class="text-right">@line.Product.DiscountPrice.ToString("c")</td>
                 <td class="text-right">
-                    @((line.Quantity * line.Product.Price).ToString("c"))
+                    @((line.Quantity * line.Product.DiscountPrice).ToString("c"))
                 </td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
