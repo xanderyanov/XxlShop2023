@@ -3,15 +3,16 @@
 <form action="/Mail/SendMessage" method="post">
     <div class="mb-3">
         <label for="Email" class="form-label">Email получателя</label>
-        <input type="email" class="form-control" id="Email" name="Email">
+        @*@Html.EditorFor(x => x.Email, additionalViewData: new { @class = "form-control 123" }) *@
+        <input type="email" class="form-control" id="@Html.IdFor(x => x.Email)" name="@Html.NameFor(x => x.Email)" value="@Html.ValueFor(x => x.Email)" autocomplete="off">
     </div>
     <div class="mb-3">
         <label for="Subject" class="form-label">Тема письма</label>
-        <input type="text" class="form-control" id="Subject" name="Subject">
+        <input type="text" class="form-control" id="@Html.IdFor(x => x.Subject)" name="@Html.NameFor(x => x.Subject)" value="@Html.ValueFor(x => x.Subject)" autocomplete="off">
     </div>
     <div class="mb-3">
         <label for="Text" class="form-label">Текст письма</label>
-        <textarea class="form-control" id="Text" rows="5" name="Text"></textarea>
+        <textarea class="form-control" rows="5" id="Text" name="Text">@Html.ValueFor(x => x.Text)</textarea>
     </div>
     <button class="btn btn-primary" type="submit">Отправить</button>
 </form>

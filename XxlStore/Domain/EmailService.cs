@@ -18,7 +18,7 @@ namespace XxlStore
             };
 
             using (var client = new SmtpClient()) {
-                await client.ConnectAsync("smtp.mail.ru", 25, false);
+                await client.ConnectAsync("smtp.mail.ru", 465, true);
                 await client.AuthenticateAsync("zokrat@bk.ru", "aPufVxa5dfnxkpTGxG1k");
                 await client.SendAsync(emailMessage);
 

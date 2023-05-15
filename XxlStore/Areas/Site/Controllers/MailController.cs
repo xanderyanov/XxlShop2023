@@ -25,7 +25,7 @@ namespace XxlStore.Areas.Site.Controllers
                 await emailService.SendEmailAsync(message.Email, message.Subject, message.Text);
                 return RedirectToAction("Success");
             } else {
-                return View("Index");
+                return View("Index", message);
             }
         }
     }
