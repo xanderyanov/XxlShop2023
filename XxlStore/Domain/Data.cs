@@ -12,9 +12,8 @@ using XxlStore.Models;
 
 namespace XxlStore;
 
-public class Domain {
-
-
+public class Domain
+{
 
     public List<Product> ExistingTovars;
 
