@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using XxlStore.Models;
 
 namespace XxlStore.Areas.Site.Controllers
 {
@@ -7,15 +8,25 @@ namespace XxlStore.Areas.Site.Controllers
     {
         public IActionResult Index()
         {
-           
+           return View();
+        }
+
+        public IActionResult Success()
+        {
             return View();
         }
 
-        public async Task<IActionResult> SendMessage()
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(Message message)
         {
-            EmailService emailService = new EmailService();
-            await emailService.SendEmailAsync("zokrat@yandex.ru", "Тема письма", "Тест письма: тест!");
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid) {
+                EmailService emailService = new EmailService();
+                await emailService.SendEmailAsync(message.Email, message.Subject, message.Text);
+                return RedirectToAction("Success");
+            } else {
+                return View("Index");
+            }
         }
     }
 }

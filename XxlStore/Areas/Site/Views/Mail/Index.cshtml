@@ -1,6 +1,17 @@
-﻿
+﻿@model Message
 
 <form action="/Mail/SendMessage" method="post">
-
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email получателя</label>
+        <input type="email" class="form-control" id="Email" name="Email">
+    </div>
+    <div class="mb-3">
+        <label for="Subject" class="form-label">Тема письма</label>
+        <input type="text" class="form-control" id="Subject" name="Subject">
+    </div>
+    <div class="mb-3">
+        <label for="Text" class="form-label">Текст письма</label>
+        <textarea class="form-control" id="Text" rows="5" name="Text"></textarea>
+    </div>
     <button class="btn btn-primary" type="submit">Отправить</button>
 </form>
