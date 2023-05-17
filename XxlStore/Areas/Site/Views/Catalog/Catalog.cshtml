@@ -7,6 +7,39 @@
 }
 
 <script>
+    $(function (){
+        var original = document.title;
+        var timeout;
+
+        window.coders = function (newMsg, howManyTimes) {
+            function step() {
+                document.title = (document.title == original) ? newMsg : original;
+
+                if (--howManyTimes > 0) {
+                    timeout = setTimeout(step, 1000);
+                };
+            };
+
+            howManyTimes = parseInt(howManyTimes);
+
+            if (isNaN(howManyTimes)) {
+                howManyTimes = 90;
+            };
+
+            cancelcoders(timeout);
+            step();
+        };
+
+        window.cancelcoders = function () {
+            clearTimeout(timeout);
+            document.title = original;
+        };
+   
+
+        coders("####### Новое сообщение ######");
+
+    });
+
     $(function () {
         $(".layout")
         .click(function (ev) {
