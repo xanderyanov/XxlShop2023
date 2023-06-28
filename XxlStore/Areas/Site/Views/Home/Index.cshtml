@@ -2,6 +2,8 @@
 
 <h4>@Model.CurrentCategory</h4>
 
+<h3>Новинки</h3>
+
 <div class="row">
     @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>()) {
         <partial name="ProductSummary" model="p" />
